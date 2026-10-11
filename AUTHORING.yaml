@@ -1,0 +1,103 @@
+version: 1
+approval: PCA requested 2026-10-11; established reading-only scope
+course:
+  id: ATS051
+  certification:
+    name: Prometheus Certified Associate
+    code: PCA
+    provider: CNCF / Linux Foundation
+    domain: Alerting & Dashboarding
+    weight: 18
+    competencies:
+    - Dashboarding basics
+    - Configuring Alerting rules
+    - Understand and Use Alertmanager
+    - Alerting basics (when, what, and why)
+defaults:
+  playground: false
+  module_lab: false
+  capstone: false
+  section_quiz: false
+  final_quiz: true
+assessment_format: YAML question banks v1, registered in assessments/index.yaml
+sections:
+- id: section-010
+  title: Dashboarding basics
+  curriculum_item: Dashboarding basics
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Dashboards That Explain Population, Units And Gaps
+    objectives:
+    - Choose panels for rate, duration, errors and saturation.
+    - Explain time range, resolution and units.
+    - Preserve grouping and denominator context.
+    - Distinguish display gaps from measured zero and alert evaluation.
+    outline:
+    - Dashboards That Explain Population, Units And Gaps
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+      adapted_from: null
+- id: section-020
+  title: Configuring Alerting rules
+  curriculum_item: Configuring Alerting rules
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Alert Expressions, Pending State And Stable Labels
+    objectives:
+    - Explain when an expression creates an alert instance.
+    - Distinguish inactive, pending and firing states.
+    - Relate for duration, label stability and missing inputs.
+    - Separate alert labels from explanatory annotations.
+    outline:
+    - Alert Expressions, Pending State And Stable Labels
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+      adapted_from: null
+- id: section-030
+  title: Understand and Use Alertmanager
+  curriculum_item: Understand and Use Alertmanager
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Routing, Grouping, Silences And Inhibition
+    objectives:
+    - Trace alerts through the Alertmanager routing tree.
+    - Distinguish grouping timers from rule persistence.
+    - Compare silencing and inhibition without changing source conditions.
+    - Explain receiver delivery and high-availability deduplication limits.
+    outline:
+    - Routing, Grouping, Silences And Inhibition
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+      adapted_from: null
+- id: section-040
+  title: Alerting basics (when, what, and why)
+  curriculum_item: Alerting basics (when, what, and why)
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Actionable Alerts, Symptoms And Error-Budget Reasoning
+    objectives:
+    - Define an alert's owner, impact and expected action.
+    - Distinguish urgent symptoms from diagnostic causes.
+    - Relate SLO error budgets and burn rates to response timing.
+    - Evaluate low traffic, maintenance and monitoring failures.
+    outline:
+    - Actionable Alerts, Symptoms And Error-Budget Reasoning
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+      adapted_from: null

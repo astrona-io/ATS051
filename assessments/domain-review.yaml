@@ -1,0 +1,243 @@
+schema_version: 1
+kind: question_bank
+id: ats051-domain-review
+course_id: ATS051
+exam_code: PCA
+status: draft
+provenance: Original practice material; not official examination questions.
+scope:
+  type: domain
+  id: domain-review
+  title: Alerting & Dashboarding
+placement:
+  position: after
+  reading: sections/section-040/module-01/course-02-summary.md
+questions:
+- id: ats051-domain-review-q01
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Choose panels for rate, duration, errors and saturation.
+  source_readings:
+  - sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  prompt: Which panel design supports a service overview?
+  options:
+  - id: a
+    text: Only an unlabeled global average.
+    explanation: That can hide the population and localized failures.
+  - id: b
+    text: Only the number of installed dashboards.
+    explanation: Dashboard count is not service evidence.
+  - id: c
+    text: Related traffic, error, duration and saturation views with clear units.
+    explanation: They describe complementary behavior.
+  correct_option: c
+  explanation: They describe complementary behavior.
+- id: ats051-domain-review-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain time range, resolution and units.
+  source_readings:
+  - sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  prompt: What does a faster dashboard refresh change?
+  options:
+  - id: a
+    text: Every alert's persistence duration.
+    explanation: Alert rule settings are separate.
+  - id: b
+    text: How often the display queries or updates its view.
+    explanation: It does not reschedule target scraping.
+  - id: c
+    text: The number of samples already collected historically.
+    explanation: Presentation cannot create past observations.
+  correct_option: b
+  explanation: It does not reschedule target scraping.
+- id: ats051-domain-review-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish display gaps from measured zero and alert evaluation.
+  source_readings:
+  - sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  prompt: Why should a graph gap remain distinguishable from zero?
+  options:
+  - id: a
+    text: It can indicate missing collection or unmatched selection.
+    explanation: Inventing zero can suggest false health.
+  - id: b
+    text: Every gap always means no traffic.
+    explanation: That is only one possible explanation.
+  - id: c
+    text: Zero is never a valid measured value.
+    explanation: A real zero can be meaningful when observed.
+  correct_option: a
+  explanation: Inventing zero can suggest false health.
+- id: ats051-domain-review-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain when an expression creates an alert instance.
+  source_readings:
+  - sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  prompt: What activates an alert expression most directly?
+  options:
+  - id: a
+    text: Only a graph panel turning red.
+    explanation: The panel is separate from rule evaluation.
+  - id: b
+    text: The application's log severity string alone.
+    explanation: A metric expression must evaluate the condition.
+  - id: c
+    text: Returned series representing the condition.
+    explanation: Presence matters to the alert evaluator.
+  correct_option: c
+  explanation: Presence matters to the alert evaluator.
+- id: ats051-domain-review-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish inactive, pending and firing states.
+  source_readings:
+  - sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  prompt: What does for require?
+  options:
+  - id: a
+    text: The target's scrape timeout to equal that duration.
+    explanation: Those are independent settings.
+  - id: b
+    text: The same alert instance's condition to remain active for the configured duration.
+    explanation: It adds persistence before firing.
+  - id: c
+    text: A receiver to resend every notification at that interval.
+    explanation: Notification repeat timing belongs downstream.
+  correct_option: b
+  explanation: It adds persistence before firing.
+- id: ats051-domain-review-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Separate alert labels from explanatory annotations.
+  source_readings:
+  - sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  prompt: Where should changing diagnostic values usually go?
+  options:
+  - id: a
+    text: Annotations rather than identifying labels.
+    explanation: Changing labels can create new alert instances.
+  - id: b
+    text: Only into a new label value on every evaluation.
+    explanation: That can prevent stable pending continuity.
+  - id: c
+    text: Into the metric's unit suffix dynamically.
+    explanation: Names should preserve a stable measurement contract.
+  correct_option: a
+  explanation: Changing labels can create new alert instances.
+- id: ats051-domain-review-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Trace alerts through the Alertmanager routing tree.
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  prompt: What does a route receiver determine?
+  options:
+  - id: a
+    text: Which application targets are scraped.
+    explanation: Collection configuration belongs to Prometheus.
+  - id: b
+    text: Whether a counter resets.
+    explanation: Producer lifecycle determines resets.
+  - id: c
+    text: Where matching alert notifications are sent.
+    explanation: Routing selects downstream destinations.
+  correct_option: c
+  explanation: Routing selects downstream destinations.
+- id: ats051-domain-review-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish grouping timers from rule persistence.
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  prompt: How does a silence differ from inhibition?
+  options:
+  - id: a
+    text: Both prove the underlying service recovered.
+    explanation: They affect notification rather than health.
+  - id: b
+    text: A silence suppresses matching alerts for a period; inhibition depends on other matching alerts.
+    explanation: They represent different suppression conditions.
+  - id: c
+    text: Both delete source metric history.
+    explanation: Suppression does not mutate metric storage.
+  correct_option: b
+  explanation: They represent different suppression conditions.
+- id: ats051-domain-review-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Compare silencing and inhibition without changing source conditions.
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  prompt: What does group_wait chiefly control?
+  options:
+  - id: a
+    text: Initial waiting before notifying a new group.
+    explanation: It allows related alerts to join the group.
+  - id: b
+    text: The alert rule's pending duration.
+    explanation: Rule persistence is evaluated upstream.
+  - id: c
+    text: The target's scrape timeout.
+    explanation: Collection timing is separate.
+  correct_option: a
+  explanation: It allows related alerts to join the group.
+- id: ats051-domain-review-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Define an alert's owner, impact and expected action.
+  source_readings:
+  - sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  prompt: What makes a paging alert useful?
+  options:
+  - id: a
+    text: Any numerical change regardless of impact.
+    explanation: Many normal changes need no urgent interruption.
+  - id: b
+    text: The largest possible number of recipients.
+    explanation: Broad delivery can reduce accountability.
+  - id: c
+    text: A condition requiring timely action with a responsible owner.
+    explanation: Notification should lead to a defined response.
+  correct_option: c
+  explanation: Notification should lead to a defined response.
+- id: ats051-domain-review-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish urgent symptoms from diagnostic causes.
+  source_readings:
+  - sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  prompt: Why distinguish symptoms from causes?
+  options:
+  - id: a
+    text: Only root-cause labels can ever activate an alert.
+    explanation: Observable symptoms can be actionable.
+  - id: b
+    text: A symptom can capture impact while multiple causes explain it.
+    explanation: Cause metrics support diagnosis without requiring one universal failure mechanism.
+  - id: c
+    text: Every high CPU value proves a user outage.
+    explanation: Impact depends on service behavior.
+  correct_option: b
+  explanation: Cause metrics support diagnosis without requiring one universal failure mechanism.
+- id: ats051-domain-review-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Relate SLO error budgets and burn rates to response timing.
+  source_readings:
+  - sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  prompt: What does a high error-budget burn rate indicate?
+  options:
+  - id: a
+    text: Unacceptable outcomes are consuming the allowed budget quickly.
+    explanation: It relates observed failure to the objective's allowance.
+  - id: b
+    text: The collector disk is physically burning.
+    explanation: The term describes reliability arithmetic.
+  - id: c
+    text: The SLA's legal penalty is automatically determined.
+    explanation: Contractual remedies are separate from this operational calculation.
+  correct_option: a
+  explanation: It relates observed failure to the objective's allowance.

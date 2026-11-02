@@ -35,7 +35,7 @@ modules:
 - id: module-010
   title: Dashboarding basics
   description: Developed reading and reasoning for Dashboarding basics.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Dashboarding basics
@@ -74,7 +74,7 @@ modules:
 - id: module-020
   title: Configuring Alerting rules
   description: Developed reading and reasoning for Configuring Alerting rules.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Configuring Alerting rules
@@ -130,7 +130,7 @@ modules:
 - id: module-030
   title: Understand and Use Alertmanager
   description: Developed reading and reasoning for Understand and Use Alertmanager.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Understand and Use Alertmanager
@@ -206,7 +206,7 @@ modules:
   title: Alerting basics (when, what, and why)
   description: Developed reading and reasoning for Alerting basics (when, what, and
     why).
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Alerting basics (when, what, and why)

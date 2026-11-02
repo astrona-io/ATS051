@@ -1,8 +1,9 @@
-# Preparation scaffold. Technical pages stay draft until authoring and review.
 training:
   id: ATS051
   title: 'PCA: Alerting & Dashboarding'
-  description: Preparation scaffold for Alerting & Dashboarding. Lessons and environments are planned.
+  description: 'Detailed reading material and reusable YAML knowledge checks for PCA:
+    Alerting & Dashboarding. Technical content remains draft. Private playgrounds
+    and draft independent labs are included.'
   certification:
     name: Prometheus Certified Associate
     code: PCA
@@ -17,7 +18,7 @@ training:
 modules:
 - id: module-intro
   title: Introduction
-  description: Planned introduction and authoring status.
+  description: Audience, reading method and review process.
   content:
   - type: reading
     title: Introduction
@@ -33,41 +34,210 @@ modules:
     path: sections/intro/course-03-how-this-course-is-made.md
 - id: module-010
   title: Dashboarding basics
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Dashboarding basics.
+  status: alpha
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-010/README.md
   - type: reading
     title: Dashboarding basics
+    path: sections/section-010/README.md
+  - type: reading
+    title: Dashboards That Explain Population, Units And Gaps
     path: sections/section-010/module-01/course.md
+  - type: reading
+    title: Dashboards That Explain Population, Units And Gaps
+    path: sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  - type: reading
+    title: Build A Dashboard Ready Query — Task
+    path: sections/section-010/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Build A Dashboard Ready Query
+    path: sections/section-010/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Evaluate the required expression and preserve its labels, values and evaluation
+      time.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: Build A Dashboard Ready Query — Solution
+    path: sections/section-010/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Build A Dashboard Ready Query'
+    path: sections/section-010/module-01/course-02-guided-practice.md
+  - type: reading
+    title: Summary
+    path: sections/section-010/module-01/course-03-summary.md
 - id: module-020
   title: Configuring Alerting rules
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Configuring Alerting rules.
+  status: alpha
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-020/README.md
   - type: reading
     title: Configuring Alerting rules
+    path: sections/section-020/README.md
+  - type: reading
+    title: Alert Expressions, Pending State And Stable Labels
     path: sections/section-020/module-01/course.md
+  - type: reading
+    title: Alert Expressions, Pending State And Stable Labels
+    path: sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  - type: reading
+    title: Make An Alert Pending Then Firing — Task
+    path: sections/section-020/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Make An Alert Pending Then Firing
+    path: sections/section-020/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: prometheus-rule
+    task_kind: build
+    learning_goals:
+    - Create a real alert rule and observe the transition to firing.
+    tags:
+    - pca
+    - prometheus-rule
+  - type: reading
+    title: Make An Alert Pending Then Firing — Solution
+    path: sections/section-020/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: Evaluate A Recording Rule — Task
+    path: sections/section-020/module-01/labs/lab-02/question.md
+  - type: lab
+    title: Evaluate A Recording Rule
+    path: sections/section-020/module-01/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: recording-rule
+    task_kind: build
+    learning_goals:
+    - Create a recording series from live request counters.
+    tags:
+    - pca
+    - recording-rule
+  - type: reading
+    title: Evaluate A Recording Rule — Solution
+    path: sections/section-020/module-01/labs/lab-02/solution.md
+  - type: reading
+    title: 'Guided Practice: Make An Alert Pending Then Firing'
+    path: sections/section-020/module-01/course-02-guided-practice.md
+  - type: reading
+    title: Summary
+    path: sections/section-020/module-01/course-03-summary.md
 - id: module-030
   title: Understand and Use Alertmanager
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Understand and Use Alertmanager.
+  status: alpha
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-030/README.md
   - type: reading
     title: Understand and Use Alertmanager
+    path: sections/section-030/README.md
+  - type: reading
+    title: Routing, Grouping, Silences And Inhibition
     path: sections/section-030/module-01/course.md
+  - type: reading
+    title: Routing, Grouping, Silences And Inhibition
+    path: sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  - type: reading
+    title: Prepare Alert Routing Labels — Task
+    path: sections/section-030/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Prepare Alert Routing Labels
+    path: sections/section-030/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Evaluate the required expression and preserve its labels, values and evaluation
+      time.
+    tags:
+    - pca
+    - promql
+  - type: reading
+    title: Prepare Alert Routing Labels — Solution
+    path: sections/section-030/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: Route An Alert To A Webhook — Task
+    path: sections/section-030/module-01/labs/lab-02/question.md
+  - type: lab
+    title: Route An Alert To A Webhook
+    path: sections/section-030/module-01/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: alertmanager-routing
+    task_kind: build
+    learning_goals:
+    - Verify real Alertmanager routing to a receiver.
+    tags:
+    - pca
+    - alertmanager-routing
+  - type: reading
+    title: Route An Alert To A Webhook — Solution
+    path: sections/section-030/module-01/labs/lab-02/solution.md
+  - type: reading
+    title: Suppress An Alert With A Matching Silence — Task
+    path: sections/section-030/module-01/labs/lab-03/question.md
+  - type: lab
+    title: Suppress An Alert With A Matching Silence
+    path: sections/section-030/module-01/labs/lab-03
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: alertmanager-silence
+    task_kind: build
+    learning_goals:
+    - Verify real Alertmanager routing and matching suppression.
+    tags:
+    - pca
+    - alertmanager-silence
+  - type: reading
+    title: Suppress An Alert With A Matching Silence — Solution
+    path: sections/section-030/module-01/labs/lab-03/solution.md
+  - type: reading
+    title: 'Guided Practice: Prepare Alert Routing Labels'
+    path: sections/section-030/module-01/course-02-guided-practice.md
+  - type: reading
+    title: Summary
+    path: sections/section-030/module-01/course-03-summary.md
 - id: module-040
   title: Alerting basics (when, what, and why)
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Alerting basics (when, what, and
+    why).
+  status: alpha
   content:
   - type: reading
-    title: Section Overview
+    title: Alerting basics (when, what, and why)
     path: sections/section-040/README.md
   - type: reading
-    title: Alerting basics (when, what, and why)
+    title: Actionable Alerts, Symptoms And Error-Budget Reasoning
     path: sections/section-040/module-01/course.md
+  - type: reading
+    title: Actionable Alerts, Symptoms And Error-Budget Reasoning
+    path: sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  - type: reading
+    title: Alert On Error Budget Consumption — Task
+    path: sections/section-040/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Alert On Error Budget Consumption
+    path: sections/section-040/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: prometheus-rule
+    task_kind: build
+    learning_goals:
+    - Create an actionable alert from the stated population and success objective.
+    tags:
+    - pca
+    - prometheus-rule
+  - type: reading
+    title: Alert On Error Budget Consumption — Solution
+    path: sections/section-040/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Alert On Error Budget Consumption'
+    path: sections/section-040/module-01/course-02-guided-practice.md
+  - type: reading
+    title: Summary
+    path: sections/section-040/module-01/course-03-summary.md

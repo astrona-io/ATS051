@@ -1,0 +1,22 @@
+{
+  "context": "kind-astro-ats-051-lab-040-01-01",
+  "resources": [
+    {
+      "kind": "configmap",
+      "name": "prometheus-rules",
+      "namespace": "starfleet",
+      "expected": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "prometheus-rules",
+          "namespace": "starfleet"
+        },
+        "data": {
+          "rules.yaml": "groups:\n- interval: 2s\n  name: lab\n  rules:\n  - alert: ErrorBudgetBurn\n    annotations:\n      summary: Failure ratio exceeds the one percent budget\n    expr: sum(rate(lab_requests_total{status=\"500\"}[10s])) / sum(rate(lab_requests_total[10s]))\n      > 0.01\n    for: 4s\n    labels:\n      severity: page\n"
+        }
+      }
+    }
+  ],
+  "behavior": []
+}

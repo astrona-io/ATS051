@@ -1,0 +1,22 @@
+{
+  "context": "kind-astro-ats-051-lab-020-01-01",
+  "resources": [
+    {
+      "kind": "configmap",
+      "name": "prometheus-rules",
+      "namespace": "starfleet",
+      "expected": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "prometheus-rules",
+          "namespace": "starfleet"
+        },
+        "data": {
+          "rules.yaml": "groups:\n- interval: 2s\n  name: lab\n  rules:\n  - alert: ProbeErrors\n    annotations:\n      summary: Probe requests are failing\n    expr: sum(rate(lab_requests_total{status=\"500\"}[10s])) > 0\n    for: 4s\n    labels:\n      severity: warning\n"
+        }
+      }
+    }
+  ],
+  "behavior": []
+}

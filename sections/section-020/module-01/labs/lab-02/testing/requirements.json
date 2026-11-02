@@ -1,0 +1,22 @@
+{
+  "context": "kind-astro-ats-051-lab-020-01-02",
+  "resources": [
+    {
+      "kind": "configmap",
+      "name": "prometheus-rules",
+      "namespace": "starfleet",
+      "expected": {
+        "apiVersion": "v1",
+        "kind": "ConfigMap",
+        "metadata": {
+          "name": "prometheus-rules",
+          "namespace": "starfleet"
+        },
+        "data": {
+          "rules.yaml": "groups:\n- name: lab\n  rules:\n  - expr: sum(rate(lab_requests_total[10s]))\n    record: lab:request_rate\n"
+        }
+      }
+    }
+  ],
+  "behavior": []
+}

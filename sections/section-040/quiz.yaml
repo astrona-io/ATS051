@@ -1,0 +1,290 @@
+# Knowledge check for section 040. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats051-040
+course_id: ATS051
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-040
+  title: Alerting basics (when, what, and why)
+questions:
+- id: ats051-040-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Choose a symptom over a cause for paging
+  source_readings:
+  - sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
+  prompt: Which condition is the best basis for a page?
+  options:
+  - id: a
+    text: The CPU use of a pod is above 80 percent.
+    explanation: CPU use is a cause metric and does not show user impact by itself.
+  - id: b
+    text: The share of failed requests is above the budget threshold.
+    explanation: Correct. Failed requests are what callers observe.
+  - id: c
+    text: A queue length gauge grew by two items.
+    explanation: A growing queue may have no user impact.
+  - id: d
+    text: A node restarted once.
+    explanation: A restart may cause no failed requests.
+  correct_option: b
+  explanation: A symptom measures the outcome for callers, so it matches impact and
+    covers unlisted causes.
+- id: ats051-040-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Name the parts of an actionable alert
+  source_readings:
+  - sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
+  prompt: Which set makes an alert actionable?
+  options:
+  - id: a
+    text: A threshold and a graph.
+    explanation: A threshold does not say who acts or what to do.
+  - id: b
+    text: Owner, impact and a runbook with the next action.
+    explanation: Correct. The receiver knows who is affected, who owns it and what
+      to do.
+  - id: c
+    text: A long description of the metric.
+    explanation: Metric detail does not give an action.
+  - id: d
+    text: A low severity.
+    explanation: Severity is only one part of the response.
+  correct_option: b
+  explanation: An actionable alert names the affected population, the impact, the
+    owner and the next action.
+- id: ats051-040-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Decide between page and ticket
+  source_readings:
+  - sections/section-040/module-01/course-02-paging-tickets-and-alert-fatigue.md
+  prompt: A certificate expires in ten days. A person must renew it, but no user is
+    affected now. How should the alert be delivered?
+  options:
+  - id: a
+    text: As a page at any hour.
+    explanation: Nothing is urgent within minutes.
+  - id: b
+    text: As a ticket for working hours.
+    explanation: Correct. It needs a human action but not at once.
+  - id: c
+    text: Not at all, because it is a cause metric.
+    explanation: The action is certain and has a deadline.
+  - id: d
+    text: As a dashboard panel only.
+    explanation: Nobody would be told to act.
+  correct_option: b
+  explanation: Page only for urgent and actionable conditions. A deadline in days
+    is a ticket.
+- id: ats051-040-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain alert fatigue
+  source_readings:
+  - sections/section-040/module-01/course-02-paging-tickets-and-alert-fatigue.md
+  prompt: What is the main harm of many alerts that need no action?
+  options:
+  - id: a
+    text: Prometheus evaluates rules more slowly.
+    explanation: Evaluation speed is not affected by the receiver.
+  - id: b
+    text: Receivers learn to ignore alerts, including real ones.
+    explanation: Correct. Reaction time to all alerts grows.
+  - id: c
+    text: Alertmanager loses its state.
+    explanation: Alertmanager state is not related.
+  - id: d
+    text: The error budget shrinks.
+    explanation: The budget depends on failures, not on alerts.
+  correct_option: b
+  explanation: Alert fatigue lowers attention to every alert.
+- id: ats051-040-q05
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Compute an error budget
+  source_readings:
+  - sections/section-040/module-01/course-03-slis-slos-and-error-budgets.md
+  prompt: An SLO target is 99.5 percent of requests succeeding. What is the error
+    budget?
+  options:
+  - id: a
+    text: 0.5 percent of requests.
+    explanation: Correct. The budget is one minus the target.
+  - id: b
+    text: 99.5 percent of requests.
+    explanation: That is the target.
+  - id: c
+    text: 5 percent of requests.
+    explanation: That would match a 95 percent target.
+  - id: d
+    text: 0.05 percent of requests.
+    explanation: That would match a 99.95 percent target.
+  correct_option: a
+  explanation: 'The error budget is 1 minus the target: 0.005.'
+- id: ats051-040-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Compute a burn rate
+  source_readings:
+  - sections/section-040/module-01/course-03-slis-slos-and-error-budgets.md
+  prompt: The budget is 0.001 and the observed error ratio is 0.01. What is the burn
+    rate?
+  options:
+  - id: a
+    text: '0.1'
+    explanation: This divides the budget by the ratio.
+  - id: b
+    text: '10'
+    explanation: Correct. 0.01 divided by 0.001 is 10.
+  - id: c
+    text: '100'
+    explanation: That would need a ratio of 0.1.
+  - id: d
+    text: '0.011'
+    explanation: Adding the values has no meaning.
+  correct_option: b
+  explanation: Burn rate is the error ratio divided by the budget.
+- id: ats051-040-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Compute time to exhaustion
+  source_readings:
+  - sections/section-040/module-02/course-01-burn-rate-math.md
+  prompt: The SLO window is 30 days. The burn rate is 10. How long does the full budget
+    last?
+  options:
+  - id: a
+    text: 3 days
+    explanation: Correct. 30 days divided by 10.
+  - id: b
+    text: 10 days
+    explanation: This would be a burn rate of 3.
+  - id: c
+    text: 30 days
+    explanation: That is a burn rate of 1.
+  - id: d
+    text: 300 days
+    explanation: Multiplying instead of dividing gives the wrong direction.
+  correct_option: a
+  explanation: Time to exhaustion is the window divided by the burn rate.
+- id: ats051-040-q08
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Derive a burn-rate threshold
+  source_readings:
+  - sections/section-040/module-02/course-01-burn-rate-math.md
+  prompt: A team accepts losing 2 percent of a 720 hour budget over a one hour window.
+    What burn rate is that?
+  options:
+  - id: a
+    text: '2'
+    explanation: This is the percentage, not the burn rate.
+  - id: b
+    text: '14.4'
+    explanation: Correct. 0.02 * 720 / 1 equals 14.4.
+  - id: c
+    text: '36'
+    explanation: This divides by 0.02 and 720 incorrectly.
+  - id: d
+    text: '720'
+    explanation: That would use the full budget in one hour.
+  correct_option: b
+  explanation: r = consumed * W / d = 0.02 * 720 / 1 = 14.4.
+- id: ats051-040-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the short window
+  source_readings:
+  - sections/section-040/module-02/course-02-multi-window-burn-rate-alerts.md
+  prompt: Why does a multi-window burn-rate alert add a short window?
+  options:
+  - id: a
+    text: To make the alert fire faster after the fault starts.
+    explanation: The long window sets detection; the short one does not make it earlier.
+  - id: b
+    text: To resolve the alert quickly after the fault is fixed.
+    explanation: Correct. The short window drops below the threshold first.
+  - id: c
+    text: To lower the threshold.
+    explanation: Both windows use the same threshold.
+  - id: d
+    text: To skip the `for` duration.
+    explanation: The `for` duration is still evaluated.
+  correct_option: b
+  explanation: The `and` is false as soon as the short window recovers.
+- id: ats051-040-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain how `and` combines windows
+  source_readings:
+  - sections/section-040/module-02/course-02-multi-window-burn-rate-alerts.md
+  prompt: Two window expressions are joined with `and`, but one is aggregated `by
+    (service)` and the other without `by`. What is the result?
+  options:
+  - id: a
+    text: The alert always fires.
+    explanation: Mismatched label sets do not match.
+  - id: b
+    text: An empty result, so no alert instance exists.
+    explanation: Correct. `and` needs matching label sets.
+  - id: c
+    text: An error from Prometheus.
+    explanation: This is valid PromQL that returns an empty result.
+  - id: d
+    text: The larger of the two values.
+    explanation: "`and` does not choose values."
+  correct_option: b
+  explanation: Elements match only when their label sets agree.
+- id: ats051-040-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use a Watchdog alert
+  source_readings:
+  - sections/section-040/module-02/course-03-testing-and-watching-the-alerting-pipeline.md
+  prompt: What does an always-firing Watchdog alert show when its notification stops
+    arriving?
+  options:
+  - id: a
+    text: The service has failed.
+    explanation: The Watchdog does not measure a service.
+  - id: b
+    text: The alerting pipeline is broken somewhere.
+    explanation: Correct. Evaluation, the connection or delivery has failed.
+  - id: c
+    text: The error budget is spent.
+    explanation: The Watchdog is unrelated to the budget.
+  - id: d
+    text: A silence was created.
+    explanation: A silence would not matter if the Watchdog route is separate.
+  correct_option: b
+  explanation: The Watchdog proves the path end to end.
+- id: ats051-040-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Detect a missing target
+  source_readings:
+  - sections/section-040/module-02/course-03-testing-and-watching-the-alerting-pipeline.md
+  prompt: Which expression fires when no successful scrape of job `probe` exists?
+  options:
+  - id: a
+    text: '`up{job="probe"} > 1`'
+    explanation: "`up` is never greater than 1."
+  - id: b
+    text: '`absent(up{job="probe"} == 1)`'
+    explanation: Correct. `absent()` returns 1 when the inner result is empty.
+  - id: c
+    text: '`rate(up{job="probe"}[1m]) == 0`'
+    explanation: Rate of a gauge is not meaningful here and an empty result stays
+      silent.
+  - id: d
+    text: '`count(up{job="probe"}) == 0`'
+    explanation: "`count` over an empty vector returns nothing, so this stays silent."
+  correct_option: b
+  explanation: "`absent()` turns an empty result into an alert condition."

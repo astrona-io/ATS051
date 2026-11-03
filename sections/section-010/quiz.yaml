@@ -1,0 +1,282 @@
+# Knowledge check for section 010. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats051-010
+course_id: ATS051
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-010
+  title: Dashboarding basics
+questions:
+- id: ats051-010-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Choose the population of a panel
+  source_readings:
+  - sections/section-010/module-01/course-01-panels-population-and-grouping.md
+  prompt: A panel plots `sum(rate(lab_requests_total[1m]))`. Which population does
+    the line describe?
+  options:
+  - id: a
+    text: Every `lab_requests_total` series, summed into one line.
+    explanation: Correct. `sum` without `by` combines all series.
+  - id: b
+    text: Only status 500 requests.
+    explanation: No selector on `status` exists.
+  - id: c
+    text: One pod.
+    explanation: The sum covers all pods.
+  - id: d
+    text: No series, because `sum` needs `by`.
+    explanation: "`by` is optional."
+  correct_option: a
+  explanation: Without `by` or `without`, `sum` returns one element for all input
+    series.
+- id: ats051-010-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Group a panel by a label
+  source_readings:
+  - sections/section-010/module-01/course-01-panels-population-and-grouping.md
+  prompt: Which change draws one line per `status` value?
+  options:
+  - id: a
+    text: "`sum(rate(lab_requests_total[1m]))`"
+    explanation: This is one line.
+  - id: b
+    text: "`sum by (status) (rate(lab_requests_total[1m]))`"
+    explanation: Correct. `by` keeps the listed label.
+  - id: c
+    text: "`sum(rate(lab_requests_total[1m])) by status`"
+    explanation: The label list needs parentheses.
+  - id: d
+    text: "`rate(lab_requests_total{status})`"
+    explanation: A selector needs a matcher.
+  correct_option: b
+  explanation: "`by (label)` keeps one element per value of the label."
+- id: ats051-010-q03
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Pick the unit of a rate
+  source_readings:
+  - sections/section-010/module-01/course-02-units-ratios-and-denominators.md
+  prompt: "`rate(lab_requests_total[1m])` is shown on a panel. What unit does it have?"
+  options:
+  - id: a
+    text: Requests per second
+    explanation: Correct. `rate` returns a per-second average.
+  - id: b
+    text: Requests per minute
+    explanation: The range does not change the unit.
+  - id: c
+    text: Requests
+    explanation: That is the counter itself.
+  - id: d
+    text: Percent
+    explanation: A rate of one counter is not a percentage.
+  correct_option: a
+  explanation: "`rate()` returns the per-second average increase over the range."
+- id: ats051-010-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Write an error ratio
+  source_readings:
+  - sections/section-010/module-01/course-02-units-ratios-and-denominators.md
+  prompt: Which expression gives the share of failed requests?
+  options:
+  - id: a
+    text: '`rate(lab_requests_total{status="500"}[1m])`'
+    explanation: This is failures per second.
+  - id: b
+    text: '`sum(rate(lab_requests_total{status="500"}[1m])) / sum(rate(lab_requests_total[1m]))`'
+    explanation: Correct. Failed rate over total rate.
+  - id: c
+    text: '`sum(lab_requests_total{status="500"}) / 100`'
+    explanation: Counters are not divided by a constant.
+  - id: d
+    text: '`sum(rate(lab_requests_total{status="500"}[1m])) - sum(rate(lab_requests_total[1m]))`'
+    explanation: Subtraction gives a rate, not a ratio.
+  correct_option: b
+  explanation: A ratio divides two rates with the same population and window.
+- id: ats051-010-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Relate rate window and scrape interval
+  source_readings:
+  - sections/section-010/module-01/course-03-time-range-step-and-rate-window.md
+  prompt: Prometheus scrapes every 2 seconds. Which `rate()` range is too short?
+  options:
+  - id: a
+    text: "[1m]"
+    explanation: Plenty of samples.
+  - id: b
+    text: "[10s]"
+    explanation: Five samples, usable.
+  - id: c
+    text: "[2s]"
+    explanation: Correct. One sample at most is inside, so there is nothing to compute.
+  - id: d
+    text: "[30s]"
+    explanation: Many samples.
+  correct_option: c
+  explanation: A rate needs at least two samples in the range.
+- id: ats051-010-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the step of a range query
+  source_readings:
+  - sections/section-010/module-01/course-03-time-range-step-and-rate-window.md
+  prompt: A range query has `step=60`. What does the panel show?
+  options:
+  - id: a
+    text: One evaluated point every 60 seconds.
+    explanation: Correct. The query runs at each step timestamp.
+  - id: b
+    text: A sample per second.
+    explanation: The step is 60 seconds.
+  - id: c
+    text: The average over 60 seconds.
+    explanation: The range in brackets sets the window, not the step.
+  - id: d
+    text: Only the last point.
+    explanation: A range query returns points for the whole range.
+  correct_option: a
+  explanation: The step is the distance between evaluation timestamps.
+- id: ats051-010-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a gap from zero
+  source_readings:
+  - sections/section-010/module-01/course-04-gaps-staleness-and-zero.md
+  prompt: A line stops for two minutes and then continues. What does the gap mean?
+  options:
+  - id: a
+    text: The value was zero.
+    explanation: Zero would be drawn at zero.
+  - id: b
+    text: No samples were available, or the series was stale.
+    explanation: Correct. A gap means no data.
+  - id: c
+    text: Grafana skipped it for speed.
+    explanation: A gap reflects the data.
+  - id: d
+    text: The counter reset.
+    explanation: A reset shows as a rate dip or no change in `rate()`.
+  correct_option: b
+  explanation: Missing data is not zero.
+- id: ats051-010-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain staleness
+  source_readings:
+  - sections/section-010/module-01/course-04-gaps-staleness-and-zero.md
+  prompt: A target disappears. How does Prometheus treat its series?
+  options:
+  - id: a
+    text: It marks them stale, so queries stop returning them.
+    explanation: Correct. A stale marker ends the series at that time.
+  - id: b
+    text: It keeps the last value forever.
+    explanation: Staleness prevents that.
+  - id: c
+    text: It sets them to zero.
+    explanation: Zero is a value, a stale series has none.
+  - id: d
+    text: It deletes the history.
+    explanation: Old samples remain.
+  correct_option: a
+  explanation: A stale series is no longer returned by instant queries.
+- id: ats051-010-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Understand cumulative buckets
+  source_readings:
+  - sections/section-010/module-02/course-01-histograms-and-histogram-quantile.md
+  prompt: A histogram has buckets `le="0.05"` and `le="0.1"`. What does `le="0.1"`
+    count?
+  options:
+  - id: a
+    text: Observations between 0.05 and 0.1.
+    explanation: Buckets are cumulative.
+  - id: b
+    text: Observations less than or equal to 0.1, including those in smaller buckets.
+    explanation: Correct.
+  - id: c
+    text: Observations equal to 0.1.
+    explanation: It includes everything below.
+  - id: d
+    text: The total count only.
+    explanation: That is the `+Inf` bucket.
+  correct_option: b
+  explanation: "`le` means less than or equal to, and buckets are cumulative."
+- id: ats051-010-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Compute a quantile correctly
+  source_readings:
+  - sections/section-010/module-02/course-02-aggregating-quantiles-and-averages.md
+  prompt: Which query gives a 95th percentile for the whole service?
+  options:
+  - id: a
+    text: "`avg(histogram_quantile(0.95, rate(x_bucket[1m])))`"
+    explanation: Averaging quantiles is not valid.
+  - id: b
+    text: "`histogram_quantile(0.95, sum by (le) (rate(x_bucket[1m])))`"
+    explanation: Correct. Sum the bucket rates first.
+  - id: c
+    text: "`histogram_quantile(0.95, x_count)`"
+    explanation: The quantile needs buckets.
+  - id: d
+    text: "`rate(x_sum[1m])`"
+    explanation: This is time per second, not a quantile.
+  correct_option: b
+  explanation: Combine buckets by `le`, then compute the quantile.
+- id: ats051-010-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Compute a mean latency
+  source_readings:
+  - sections/section-010/module-02/course-02-aggregating-quantiles-and-averages.md
+  prompt: Which expression gives the mean request duration?
+  options:
+  - id: a
+    text: "`rate(x_sum[1m]) / rate(x_count[1m])`"
+    explanation: Correct. Time spent divided by requests.
+  - id: b
+    text: "`rate(x_count[1m]) / rate(x_sum[1m])`"
+    explanation: This inverts the ratio.
+  - id: c
+    text: "`sum(x_bucket)`"
+    explanation: This adds unlike buckets.
+  - id: d
+    text: "`histogram_quantile(0.5, x_sum)`"
+    explanation: The median needs buckets.
+  correct_option: a
+  explanation: The mean is the rate of the sum over the rate of the count.
+- id: ats051-010-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use a multi-value variable
+  source_readings:
+  - sections/section-010/module-02/course-03-dashboard-variables-and-query-resolution.md
+  prompt: A dashboard variable allows several selected values. Which matcher uses
+    it?
+  options:
+  - id: a
+    text: '`service="$service"`'
+    explanation: This is an exact match of one string.
+  - id: b
+    text: '`service=~"$service"`'
+    explanation: Correct. A regex matcher accepts several values.
+  - id: c
+    text: '`service!="$service"`'
+    explanation: This excludes values.
+  - id: d
+    text: "`service in $service`"
+    explanation: Not PromQL.
+  correct_option: b
+  explanation: Multi-value variables expand into a regex alternation.

@@ -11,14 +11,14 @@ scope:
   title: Alerting & Dashboarding
 placement:
   position: after
-  reading: sections/section-040/module-01/course-02-summary.md
+  reading: sections/section-040/module-02/course-04-summary.md
 questions:
 - id: ats051-domain-review-q01
   type: single_choice
   difficulty: intermediate
   learning_objective: Choose panels for rate, duration, errors and saturation.
   source_readings:
-  - sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  - sections/section-010/module-01/course-01-panels-population-and-grouping.md
   prompt: Which panel design supports a service overview?
   options:
   - id: a
@@ -37,7 +37,7 @@ questions:
   difficulty: intermediate
   learning_objective: Explain time range, resolution and units.
   source_readings:
-  - sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  - sections/section-010/module-01/course-01-panels-population-and-grouping.md
   prompt: What does a faster dashboard refresh change?
   options:
   - id: a
@@ -56,7 +56,7 @@ questions:
   difficulty: intermediate
   learning_objective: Distinguish display gaps from measured zero and alert evaluation.
   source_readings:
-  - sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+  - sections/section-010/module-01/course-01-panels-population-and-grouping.md
   prompt: Why should a graph gap remain distinguishable from zero?
   options:
   - id: a
@@ -75,7 +75,7 @@ questions:
   difficulty: intermediate
   learning_objective: Explain when an expression creates an alert instance.
   source_readings:
-  - sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  - sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
   prompt: What activates an alert expression most directly?
   options:
   - id: a
@@ -94,7 +94,7 @@ questions:
   difficulty: intermediate
   learning_objective: Distinguish inactive, pending and firing states.
   source_readings:
-  - sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  - sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
   prompt: What does for require?
   options:
   - id: a
@@ -113,7 +113,7 @@ questions:
   difficulty: intermediate
   learning_objective: Separate alert labels from explanatory annotations.
   source_readings:
-  - sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+  - sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
   prompt: Where should changing diagnostic values usually go?
   options:
   - id: a
@@ -132,7 +132,7 @@ questions:
   difficulty: intermediate
   learning_objective: Trace alerts through the Alertmanager routing tree.
   source_readings:
-  - sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
   prompt: What does a route receiver determine?
   options:
   - id: a
@@ -151,7 +151,7 @@ questions:
   difficulty: intermediate
   learning_objective: Distinguish grouping timers from rule persistence.
   source_readings:
-  - sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
   prompt: How does a silence differ from inhibition?
   options:
   - id: a
@@ -170,7 +170,7 @@ questions:
   difficulty: intermediate
   learning_objective: Compare silencing and inhibition without changing source conditions.
   source_readings:
-  - sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
   prompt: What does group_wait chiefly control?
   options:
   - id: a
@@ -189,7 +189,7 @@ questions:
   difficulty: intermediate
   learning_objective: Define an alert's owner, impact and expected action.
   source_readings:
-  - sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  - sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
   prompt: What makes a paging alert useful?
   options:
   - id: a
@@ -208,7 +208,7 @@ questions:
   difficulty: intermediate
   learning_objective: Distinguish urgent symptoms from diagnostic causes.
   source_readings:
-  - sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  - sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
   prompt: Why distinguish symptoms from causes?
   options:
   - id: a
@@ -227,7 +227,7 @@ questions:
   difficulty: intermediate
   learning_objective: Relate SLO error budgets and burn rates to response timing.
   source_readings:
-  - sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+  - sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
   prompt: What does a high error-budget burn rate indicate?
   options:
   - id: a

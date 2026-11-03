@@ -1,0 +1,357 @@
+# Final knowledge check for the whole domain. Listed in astrona.yaml as the last `type: quiz` entry.
+schema_version: 1
+kind: question_bank
+id: ats051-final
+course_id: ATS051
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: domain
+  id: alerting-and-dashboarding
+  title: Alerting & Dashboarding
+questions:
+- id: ats051-final-q01
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Compute a quantile from histogram buckets
+  source_readings:
+  - sections/section-010/module-02/course-01-histograms-and-histogram-quantile.md
+  prompt: Which query returns the 95th percentile of request duration across all pods
+    of a service?
+  options:
+  - id: a
+    text: "`histogram_quantile(0.95, rate(x_bucket[5m]))`"
+    explanation: Without `sum by (le)` the quantile is computed per series.
+  - id: b
+    text: "`histogram_quantile(0.95, sum by (le) (rate(x_bucket[5m])))`"
+    explanation: Correct. Aggregate the bucket rates by `le`, then take the quantile.
+  - id: c
+    text: "`avg(histogram_quantile(0.95, rate(x_bucket[5m])))`"
+    explanation: Averaging per-series quantiles is not a valid percentile.
+  - id: d
+    text: "`rate(x_sum[5m]) / rate(x_count[5m])`"
+    explanation: That is the mean, not the 95th percentile.
+  correct_option: b
+  explanation: Buckets are cumulative counters labelled by `le`. Aggregate them before
+    computing the quantile.
+- id: ats051-final-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Choose the correct unit for a ratio panel
+  source_readings:
+  - sections/section-010/module-01/course-02-units-ratios-and-denominators.md
+  prompt: A panel shows `rate(errors[5m]) / rate(requests[5m])`. Which unit fits?
+  options:
+  - id: a
+    text: Requests per second
+    explanation: A ratio has no per-second rate unit.
+  - id: b
+    text: Percent (0.0-1.0) or ratio
+    explanation: Correct. Dividing two rates cancels the time unit.
+  - id: c
+    text: Bytes
+    explanation: Nothing in the expression measures bytes.
+  - id: d
+    text: Seconds
+    explanation: Only duration metrics use seconds.
+  correct_option: b
+  explanation: The unit of a ratio is a proportion, shown as a ratio or percent.
+- id: ats051-final-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Choose a rate window relative to the scrape interval
+  source_readings:
+  - sections/section-010/module-01/course-03-time-range-step-and-rate-window.md
+  prompt: Prometheus scrapes every 15 seconds. Which `rate()` range is the most sensible
+    minimum?
+  options:
+  - id: a
+    text: "[15s]"
+    explanation: One scrape interval holds too few samples for a rate.
+  - id: b
+    text: "[1m]"
+    explanation: Correct. At least four scrape intervals give enough samples.
+  - id: c
+    text: "[1s]"
+    explanation: There are no samples in one second.
+  - id: d
+    text: "[0s]"
+    explanation: A zero range is invalid.
+  correct_option: b
+  explanation: A range needs at least two samples, and a window of several intervals
+    tolerates a missed scrape.
+- id: ats051-final-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Tell a missing series from zero
+  source_readings:
+  - sections/section-010/module-01/course-04-gaps-staleness-and-zero.md
+  prompt: A panel shows a gap for the last minute. What does the gap mean?
+  options:
+  - id: a
+    text: The value was zero.
+    explanation: Zero is drawn as a point at zero.
+  - id: b
+    text: No sample existed or the series went stale.
+    explanation: Correct. A gap means no data, which is different from zero.
+  - id: c
+    text: Grafana lost the query.
+    explanation: A failed query shows an error.
+  - id: d
+    text: The step is too large.
+    explanation: A large step coarsens the line but does not create a gap.
+  correct_option: b
+  explanation: A missing series and a zero value are different states.
+- id: ats051-final-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain dashboard variables in queries
+  source_readings:
+  - sections/section-010/module-02/course-03-dashboard-variables-and-query-resolution.md
+  prompt: A multi-value dashboard variable `$service` is used in a selector. Which
+    matcher form works?
+  options:
+  - id: a
+    text: '`service="$service"`'
+    explanation: This matches one exact string.
+  - id: b
+    text: '`service=~"$service"`'
+    explanation: Correct. A regex matcher accepts several selected values.
+  - id: c
+    text: '`service!="$service"`'
+    explanation: This excludes the values.
+  - id: d
+    text: "`service=$service`"
+    explanation: This is not valid PromQL.
+  correct_option: b
+  explanation: Multi-value variables expand into a regex alternation, so use `=~`.
+- id: ats051-final-q06
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain pending and firing
+  source_readings:
+  - sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
+  prompt: What does the `for` field of an alerting rule control?
+  options:
+  - id: a
+    text: How often Prometheus evaluates the rule.
+    explanation: That is the group interval.
+  - id: b
+    text: How long the condition must hold before the alert fires.
+    explanation: Correct. Until then the alert is pending.
+  - id: c
+    text: How long a notification repeats.
+    explanation: That is `repeat_interval` in Alertmanager.
+  - id: d
+    text: The time range of the query.
+    explanation: The range is set in the expression.
+  correct_option: b
+  explanation: The alert stays pending until the condition has held for the `for`
+    duration.
+- id: ats051-final-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use a recording rule
+  source_readings:
+  - sections/section-020/module-01/course-03-recording-rules.md
+  prompt: Why is a recording rule used for an expensive expression that several alerts
+    read?
+  options:
+  - id: a
+    text: It lets the alert skip the `for` duration.
+    explanation: Recording rules do not change alert timing.
+  - id: b
+    text: It precomputes the result once and stores it as a new series.
+    explanation: Correct. Alerts then read a cheap series.
+  - id: c
+    text: It sends results to Alertmanager.
+    explanation: Only alerting rules produce alerts.
+  - id: d
+    text: It removes labels from the metric.
+    explanation: Labels are kept unless the expression aggregates them away.
+  correct_option: b
+  explanation: A recording rule evaluates an expression on a schedule and stores the
+    result.
+- id: ats051-final-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Validate rules before deployment
+  source_readings:
+  - sections/section-020/module-02/course-02-validating-rules-with-promtool.md
+  prompt: Which command checks a rule file for syntax errors?
+  options:
+  - id: a
+    text: "`promtool check rules rules.yaml`"
+    explanation: Correct.
+  - id: b
+    text: "`promtool query instant rules.yaml`"
+    explanation: That runs a query.
+  - id: c
+    text: "`amtool check-config rules.yaml`"
+    explanation: "`amtool` checks Alertmanager configuration."
+  - id: d
+    text: "`prometheus --check rules.yaml`"
+    explanation: That is not a Prometheus flag.
+  correct_option: a
+  explanation: "`promtool check rules` validates rule files."
+- id: ats051-final-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Match routes by labels
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
+  prompt: 'A route has `matchers: [severity="page"]` and `continue: false`. An alert
+    with `severity="page"` matches it. What happens next?'
+  options:
+  - id: a
+    text: Alertmanager also tests the sibling routes.
+    explanation: "`continue: false` stops at the first match."
+  - id: b
+    text: The alert goes to this route's receiver and sibling routes are skipped.
+    explanation: Correct. The first matching sibling wins.
+  - id: c
+    text: The alert is dropped.
+    explanation: A match delivers the alert.
+  - id: d
+    text: The alert is sent to every receiver.
+    explanation: Only the matched route is used.
+  correct_option: b
+  explanation: 'Routing stops at the first matching sibling unless `continue: true`.'
+- id: ats051-final-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Group notifications
+  source_readings:
+  - sections/section-030/module-01/course-02-grouping-and-notification-timing.md
+  prompt: 'Three alerts share `alertname` and `service` and the route has `group_by:
+    [alertname, service]`. How many notifications are sent?'
+  options:
+  - id: a
+    text: Three, one per alert.
+    explanation: Grouping combines them.
+  - id: b
+    text: One, containing all three alerts.
+    explanation: Correct. Alerts with equal group labels form one group.
+  - id: c
+    text: None until `repeat_interval`.
+    explanation: The first notification is sent after `group_wait`.
+  - id: d
+    text: One per label.
+    explanation: Groups are by label values, not by label.
+  correct_option: b
+  explanation: One group yields one notification with all its alerts.
+- id: ats051-final-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use a silence
+  source_readings:
+  - sections/section-030/module-01/course-03-silences.md
+  prompt: What is true about a silence?
+  options:
+  - id: a
+    text: It deletes the rule in Prometheus.
+    explanation: A silence does not touch rules.
+  - id: b
+    text: It mutes matching alerts in Alertmanager until its end time.
+    explanation: Correct. The alerts still fire in Prometheus.
+  - id: c
+    text: It stops Prometheus from evaluating the rule.
+    explanation: Evaluation continues.
+  - id: d
+    text: It lasts until it is removed.
+    explanation: A silence has an end time.
+  correct_option: b
+  explanation: A silence matches by label matchers and expires.
+- id: ats051-final-q12
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Write an inhibition rule
+  source_readings:
+  - sections/section-030/module-02/course-01-inhibition-rules.md
+  prompt: A critical alert should suppress warnings for the same service only. Which
+    setting limits it to the same service?
+  options:
+  - id: a
+    text: "`equal: [service]`"
+    explanation: Correct. Source and target must share this label value.
+  - id: b
+    text: "`source_matchers: [service]`"
+    explanation: Matchers select alerts, they do not compare the pair.
+  - id: c
+    text: "`group_by: [service]`"
+    explanation: Grouping does not inhibit.
+  - id: d
+    text: "`continue: true`"
+    explanation: That affects routing.
+  correct_option: a
+  explanation: "`equal` lists labels whose values must match in both alerts."
+- id: ats051-final-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain Alertmanager clustering
+  source_readings:
+  - sections/section-030/module-02/course-03-high-availability-clustering.md
+  prompt: Prometheus runs with two Alertmanagers in a cluster. How should Prometheus
+    send alerts?
+  options:
+  - id: a
+    text: To one Alertmanager only.
+    explanation: That removes the benefit of a cluster.
+  - id: b
+    text: To every Alertmanager instance.
+    explanation: Correct. The instances gossip to deduplicate notifications.
+  - id: c
+    text: Through a load balancer that picks one.
+    explanation: This sends alerts to only one instance each time.
+  - id: d
+    text: Only to the first listed in alphabetical order.
+    explanation: No such rule exists.
+  correct_option: b
+  explanation: Send to all instances. The cluster deduplicates through gossip.
+- id: ats051-final-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Choose symptoms for paging
+  source_readings:
+  - sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
+  prompt: Which is the best page?
+  options:
+  - id: a
+    text: Disk usage is 70 percent.
+    explanation: Not urgent.
+  - id: b
+    text: The error ratio is above the budget threshold in a long and a short window.
+    explanation: Correct. It is user-facing and urgent.
+  - id: c
+    text: A pod restarted.
+    explanation: May have no impact.
+  - id: d
+    text: CPU is above 60 percent.
+    explanation: Cause metric.
+  correct_option: b
+  explanation: Page on symptoms that are urgent and actionable.
+- id: ats051-final-q15
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Compute a burn-rate threshold
+  source_readings:
+  - sections/section-040/module-02/course-01-burn-rate-math.md
+  prompt: The SLO budget is 0.001. A fast-burn alert uses a burn rate of 14.4. What
+    error-ratio threshold goes into the expression?
+  options:
+  - id: a
+    text: '14.4'
+    explanation: That is the burn rate, not a ratio.
+  - id: b
+    text: '0.0144'
+    explanation: Correct. 14.4 * 0.001.
+  - id: c
+    text: '0.001'
+    explanation: That is the budget, burn rate 1.
+  - id: d
+    text: '1.44'
+    explanation: This is off by a factor of 100.
+  correct_option: b
+  explanation: The threshold ratio is the burn rate multiplied by the budget.

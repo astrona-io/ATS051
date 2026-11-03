@@ -1,3 +1,4 @@
+---
 training:
   id: ATS051
   title: 'PCA: Alerting & Dashboarding'
@@ -34,8 +35,9 @@ modules:
     path: sections/intro/course-03-how-this-course-is-made.md
 - id: module-010
   title: Dashboarding basics
-  description: Developed reading and reasoning for Dashboarding basics.
-  maturity: alpha
+  description: 'Choose and read dashboard panels: population, units, time range, gaps,
+    histograms and variables.'
+  status: alpha
   content:
   - type: reading
     title: Dashboarding basics
@@ -44,8 +46,14 @@ modules:
     title: Dashboards That Explain Population, Units And Gaps
     path: sections/section-010/module-01/course.md
   - type: reading
-    title: Dashboards That Explain Population, Units And Gaps
-    path: sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
+    title: Panels, Population And Grouping
+    path: sections/section-010/module-01/course-01-panels-population-and-grouping.md
+  - type: reading
+    title: Units, Ratios And Denominators
+    path: sections/section-010/module-01/course-02-units-ratios-and-denominators.md
+  - type: reading
+    title: Time Range, Step And Rate Window
+    path: sections/section-010/module-01/course-03-time-range-step-and-rate-window.md
   - type: reading
     title: Build A Dashboard Ready Query — Task
     path: sections/section-010/module-01/labs/lab-01/question.md
@@ -62,19 +70,99 @@ modules:
     tags:
     - pca
     - promql
+    resources:
+    - &1
+      name: Prometheus querying basics
+      url: https://prometheus.io/docs/prometheus/latest/querying/basics/
+    - &3
+      name: Prometheus HTTP API
+      url: https://prometheus.io/docs/prometheus/latest/querying/api/
   - type: reading
     title: Build A Dashboard Ready Query — Solution
     path: sections/section-010/module-01/labs/lab-01/solution.md
   - type: reading
+    title: Gaps, Staleness And Zero
+    path: sections/section-010/module-01/course-04-gaps-staleness-and-zero.md
+  - type: reading
     title: 'Guided Practice: Build A Dashboard Ready Query'
-    path: sections/section-010/module-01/course-02-guided-practice.md
+    path: sections/section-010/module-01/course-05-guided-practice.md
   - type: reading
     title: Summary
-    path: sections/section-010/module-01/course-03-summary.md
+    path: sections/section-010/module-01/course-06-summary.md
+  - type: reading
+    title: Histograms, Quantiles And Dashboard Variables
+    path: sections/section-010/module-02/course.md
+  - type: reading
+    title: Histograms And histogram_quantile
+    path: sections/section-010/module-02/course-01-histograms-and-histogram-quantile.md
+  - type: reading
+    title: Aggregating Quantiles And Averages
+    path: sections/section-010/module-02/course-02-aggregating-quantiles-and-averages.md
+  - type: reading
+    title: Build A Latency Panel Query — Task
+    path: sections/section-010/module-02/labs/lab-01/question.md
+  - type: lab
+    title: Build A Latency Panel Query
+    path: sections/section-010/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Aggregate histogram bucket rates by le and compute the 95th percentile
+    - Record the API result with its evaluation time and unit
+    tags:
+    - pca
+    - promql
+    - histogram
+    resources:
+    - &2
+      name: Histograms and summaries
+      url: https://prometheus.io/docs/practices/histograms/
+    - name: Query functions
+      url: https://prometheus.io/docs/prometheus/latest/querying/functions/
+  - type: reading
+    title: Build A Latency Panel Query — Solution
+    path: sections/section-010/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: Dashboard Variables And Query Resolution
+    path: sections/section-010/module-02/course-03-dashboard-variables-and-query-resolution.md
+  - type: reading
+    title: Summary
+    path: sections/section-010/module-02/course-04-summary.md
+  - type: reading
+    title: Dashboarding Basics Capstone — Task
+    path: sections/section-010/capstone/labs/lab-01/question.md
+  - type: lab
+    title: Dashboarding Basics Capstone
+    path: sections/section-010/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 35m
+    topic: promql
+    task_kind: build
+    learning_goals:
+    - Write the traffic, error, duration and saturation queries for a service overview
+    - Attach the correct unit to each panel and record the live API results
+    tags:
+    - pca
+    - promql
+    - dashboard
+    - capstone
+    resources:
+    - *1
+    - *2
+    - *3
+  - type: reading
+    title: Dashboarding Basics Capstone — Solution
+    path: sections/section-010/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Dashboarding basics'
+    path: sections/section-010/quiz.yaml
+    pass_score: 70
 - id: module-020
   title: Configuring Alerting rules
-  description: Developed reading and reasoning for Configuring Alerting rules.
-  maturity: alpha
+  description: Write, group, validate and troubleshoot alerting and recording rules.
+  status: alpha
   content:
   - type: reading
     title: Configuring Alerting rules
@@ -83,8 +171,8 @@ modules:
     title: Alert Expressions, Pending State And Stable Labels
     path: sections/section-020/module-01/course.md
   - type: reading
-    title: Alert Expressions, Pending State And Stable Labels
-    path: sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
+    title: Alert Rule Anatomy And Pending State
+    path: sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
   - type: reading
     title: Make An Alert Pending Then Firing — Task
     path: sections/section-020/module-01/labs/lab-01/question.md
@@ -100,9 +188,19 @@ modules:
     tags:
     - pca
     - prometheus-rule
+    resources:
+    - &4
+      name: Alerting rules
+      url: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
   - type: reading
     title: Make An Alert Pending Then Firing — Solution
     path: sections/section-020/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: Labels, Annotations And Templates
+    path: sections/section-020/module-01/course-02-labels-annotations-and-templates.md
+  - type: reading
+    title: Recording Rules
+    path: sections/section-020/module-01/course-03-recording-rules.md
   - type: reading
     title: Evaluate A Recording Rule — Task
     path: sections/section-020/module-01/labs/lab-02/question.md
@@ -118,29 +216,106 @@ modules:
     tags:
     - pca
     - recording-rule
+    resources:
+    - &5
+      name: Recording rules
+      url: https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/
+    - &6
+      name: Rules best practices
+      url: https://prometheus.io/docs/practices/rules/
   - type: reading
     title: Evaluate A Recording Rule — Solution
     path: sections/section-020/module-01/labs/lab-02/solution.md
   - type: reading
     title: 'Guided Practice: Make An Alert Pending Then Firing'
-    path: sections/section-020/module-01/course-02-guided-practice.md
+    path: sections/section-020/module-01/course-04-guided-practice.md
   - type: reading
     title: Summary
-    path: sections/section-020/module-01/course-03-summary.md
+    path: sections/section-020/module-01/course-05-summary.md
+  - type: reading
+    title: Rule Groups, Evaluation And Validation
+    path: sections/section-020/module-02/course.md
+  - type: reading
+    title: Rule Groups And Evaluation
+    path: sections/section-020/module-02/course-01-rule-groups-and-evaluation.md
+  - type: reading
+    title: Validating Rules With promtool
+    path: sections/section-020/module-02/course-02-validating-rules-with-promtool.md
+  - type: reading
+    title: Troubleshooting Rules
+    path: sections/section-020/module-02/course-03-troubleshooting-rules.md
+  - type: reading
+    title: Repair An Alert Rule That Never Fires — Task
+    path: sections/section-020/module-02/labs/lab-01/question.md
+  - type: lab
+    title: Repair An Alert Rule That Never Fires
+    path: sections/section-020/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: prometheus-rule
+    task_kind: fix
+    learning_goals:
+    - Find why a selector matches no series and why a long for duration hides an alert
+    - Add severity and templated annotations and reload the rule file
+    tags:
+    - pca
+    - prometheus-rule
+    - troubleshooting
+    resources:
+    - *4
+    - name: Unit testing for rules
+      url: https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/
+  - type: reading
+    title: Repair An Alert Rule That Never Fires — Solution
+    path: sections/section-020/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: Summary
+    path: sections/section-020/module-02/course-04-summary.md
+  - type: reading
+    title: Configuring Alerting Rules Capstone — Task
+    path: sections/section-020/capstone/labs/lab-01/question.md
+  - type: lab
+    title: Configuring Alerting Rules Capstone
+    path: sections/section-020/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 35m
+    topic: prometheus-rule
+    task_kind: build
+    learning_goals:
+    - Write a rule group with a recording rule followed by an alert that reads the
+      recorded series
+    - Confirm both rules are healthy and the alert fires
+    tags:
+    - pca
+    - prometheus-rule
+    - recording-rule
+    - capstone
+    resources:
+    - *4
+    - *5
+    - *6
+  - type: reading
+    title: Configuring Alerting Rules Capstone — Solution
+    path: sections/section-020/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Configuring Alerting rules'
+    path: sections/section-020/quiz.yaml
+    pass_score: 70
 - id: module-030
   title: Understand and Use Alertmanager
-  description: Developed reading and reasoning for Understand and Use Alertmanager.
-  maturity: alpha
+  description: Route, group, silence and inhibit notifications, configure receivers
+    and understand clustering.
+  status: alpha
   content:
   - type: reading
     title: Understand and Use Alertmanager
     path: sections/section-030/README.md
   - type: reading
-    title: Routing, Grouping, Silences And Inhibition
+    title: Routing, Grouping And Silences
     path: sections/section-030/module-01/course.md
   - type: reading
-    title: Routing, Grouping, Silences And Inhibition
-    path: sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
+    title: Routing Trees And Matchers
+    path: sections/section-030/module-01/course-01-routing-trees-and-matchers.md
   - type: reading
     title: Prepare Alert Routing Labels — Task
     path: sections/section-030/module-01/labs/lab-01/question.md
@@ -157,9 +332,16 @@ modules:
     tags:
     - pca
     - promql
+    resources:
+    - &7
+      name: Alertmanager configuration
+      url: https://prometheus.io/docs/alerting/latest/configuration/
   - type: reading
     title: Prepare Alert Routing Labels — Solution
     path: sections/section-030/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: Grouping And Notification Timing
+    path: sections/section-030/module-01/course-02-grouping-and-notification-timing.md
   - type: reading
     title: Route An Alert To A Webhook — Task
     path: sections/section-030/module-01/labs/lab-02/question.md
@@ -175,9 +357,17 @@ modules:
     tags:
     - pca
     - alertmanager-routing
+    resources:
+    - *7
+    - &8
+      name: Alertmanager overview
+      url: https://prometheus.io/docs/alerting/latest/alertmanager/
   - type: reading
     title: Route An Alert To A Webhook — Solution
     path: sections/section-030/module-01/labs/lab-02/solution.md
+  - type: reading
+    title: Silences
+    path: sections/section-030/module-01/course-03-silences.md
   - type: reading
     title: Suppress An Alert With A Matching Silence — Task
     path: sections/section-030/module-01/labs/lab-03/question.md
@@ -193,20 +383,93 @@ modules:
     tags:
     - pca
     - alertmanager-silence
+    resources:
+    - *8
   - type: reading
     title: Suppress An Alert With A Matching Silence — Solution
     path: sections/section-030/module-01/labs/lab-03/solution.md
   - type: reading
     title: 'Guided Practice: Prepare Alert Routing Labels'
-    path: sections/section-030/module-01/course-02-guided-practice.md
+    path: sections/section-030/module-01/course-04-guided-practice.md
   - type: reading
     title: Summary
-    path: sections/section-030/module-01/course-03-summary.md
+    path: sections/section-030/module-01/course-05-summary.md
+  - type: reading
+    title: Inhibition, Receivers And High Availability
+    path: sections/section-030/module-02/course.md
+  - type: reading
+    title: Inhibition Rules
+    path: sections/section-030/module-02/course-01-inhibition-rules.md
+  - type: reading
+    title: Inhibit Warnings While A Critical Alert Fires — Task
+    path: sections/section-030/module-02/labs/lab-01/question.md
+  - type: lab
+    title: Inhibit Warnings While A Critical Alert Fires
+    path: sections/section-030/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: alertmanager-inhibition
+    task_kind: build
+    learning_goals:
+    - Write an inhibition rule with source matchers, target matchers and equal labels
+    - Show that only warnings of the same service are suppressed
+    tags:
+    - pca
+    - alertmanager
+    - inhibition
+    resources:
+    - *7
+    - *8
+  - type: reading
+    title: Inhibit Warnings While A Critical Alert Fires — Solution
+    path: sections/section-030/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: Receivers And Notification Templates
+    path: sections/section-030/module-02/course-02-receivers-and-notification-templates.md
+  - type: reading
+    title: High Availability Clustering
+    path: sections/section-030/module-02/course-03-high-availability-clustering.md
+  - type: reading
+    title: amtool And The API
+    path: sections/section-030/module-02/course-04-amtool-and-the-api.md
+  - type: reading
+    title: Summary
+    path: sections/section-030/module-02/course-05-summary.md
+  - type: reading
+    title: Alertmanager Capstone — Task
+    path: sections/section-030/capstone/labs/lab-01/question.md
+  - type: lab
+    title: Alertmanager Capstone
+    path: sections/section-030/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 35m
+    topic: alertmanager-routing
+    task_kind: build
+    learning_goals:
+    - Route critical alerts to a dedicated receiver and group them by alertname and
+      service
+    - Inhibit warnings while a critical alert for the same service fires
+    tags:
+    - pca
+    - alertmanager
+    - routing
+    - inhibition
+    - capstone
+    resources:
+    - *7
+    - *8
+  - type: reading
+    title: Alertmanager Capstone — Solution
+    path: sections/section-030/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Understand and Use Alertmanager'
+    path: sections/section-030/quiz.yaml
+    pass_score: 70
 - id: module-040
   title: Alerting basics (when, what, and why)
-  description: Developed reading and reasoning for Alerting basics (when, what, and
-    why).
-  maturity: alpha
+  description: 'Decide when and what to alert on: symptoms, severity, error budgets
+    and burn rates.'
+  status: alpha
   content:
   - type: reading
     title: Alerting basics (when, what, and why)
@@ -215,8 +478,14 @@ modules:
     title: Actionable Alerts, Symptoms And Error-Budget Reasoning
     path: sections/section-040/module-01/course.md
   - type: reading
-    title: Actionable Alerts, Symptoms And Error-Budget Reasoning
-    path: sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
+    title: Actionable Alerts And Symptoms
+    path: sections/section-040/module-01/course-01-actionable-alerts-and-symptoms.md
+  - type: reading
+    title: Paging, Tickets And Alert Fatigue
+    path: sections/section-040/module-01/course-02-paging-tickets-and-alert-fatigue.md
+  - type: reading
+    title: SLIs, SLOs And Error Budgets
+    path: sections/section-040/module-01/course-03-slis-slos-and-error-budgets.md
   - type: reading
     title: Alert On Error Budget Consumption — Task
     path: sections/section-040/module-01/labs/lab-01/question.md
@@ -232,12 +501,93 @@ modules:
     tags:
     - pca
     - prometheus-rule
+    resources:
+    - &10
+      name: Alerting best practices
+      url: https://prometheus.io/docs/practices/alerting/
+    - &9
+      name: Alerting on SLOs
+      url: https://sre.google/workbook/alerting-on-slos/
   - type: reading
     title: Alert On Error Budget Consumption — Solution
     path: sections/section-040/module-01/labs/lab-01/solution.md
   - type: reading
     title: 'Guided Practice: Alert On Error Budget Consumption'
-    path: sections/section-040/module-01/course-02-guided-practice.md
+    path: sections/section-040/module-01/course-04-guided-practice.md
   - type: reading
     title: Summary
-    path: sections/section-040/module-01/course-03-summary.md
+    path: sections/section-040/module-01/course-05-summary.md
+  - type: reading
+    title: Burn Rates And Alert Quality
+    path: sections/section-040/module-02/course.md
+  - type: reading
+    title: Burn Rate Math
+    path: sections/section-040/module-02/course-01-burn-rate-math.md
+  - type: reading
+    title: Multi-Window Burn Rate Alerts
+    path: sections/section-040/module-02/course-02-multi-window-burn-rate-alerts.md
+  - type: reading
+    title: Write A Multi-Window Burn Rate Alert — Task
+    path: sections/section-040/module-02/labs/lab-01/question.md
+  - type: lab
+    title: Write A Multi-Window Burn Rate Alert
+    path: sections/section-040/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: prometheus-rule
+    task_kind: build
+    learning_goals:
+    - Compute a burn rate threshold from the error budget
+    - Join a long and a short window with and, and add severity and runbook metadata
+    tags:
+    - pca
+    - prometheus-rule
+    - slo
+    - burn-rate
+    resources:
+    - *9
+    - *4
+  - type: reading
+    title: Write A Multi-Window Burn Rate Alert — Solution
+    path: sections/section-040/module-02/labs/lab-01/solution.md
+  - type: reading
+    title: Testing And Watching The Alerting Pipeline
+    path: sections/section-040/module-02/course-03-testing-and-watching-the-alerting-pipeline.md
+  - type: reading
+    title: Summary
+    path: sections/section-040/module-02/course-04-summary.md
+  - type: reading
+    title: Alerting Basics Capstone — Task
+    path: sections/section-040/capstone/labs/lab-01/question.md
+  - type: lab
+    title: Alerting Basics Capstone
+    path: sections/section-040/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 35m
+    topic: prometheus-rule
+    task_kind: build
+    learning_goals:
+    - Write a Watchdog alert, a symptom alert on the error budget and a missing-target
+      alert
+    - Give every paging alert a severity label, a summary and a runbook annotation
+    tags:
+    - pca
+    - prometheus-rule
+    - slo
+    - watchdog
+    - capstone
+    resources:
+    - *10
+    - *9
+    - *4
+  - type: reading
+    title: Alerting Basics Capstone — Solution
+    path: sections/section-040/capstone/labs/lab-01/solution.md
+  - type: quiz
+    title: 'Knowledge Check: Alerting basics (when, what, and why)'
+    path: sections/section-040/quiz.yaml
+    pass_score: 70
+  - type: quiz
+    title: 'Final Knowledge Check: Alerting & Dashboarding'
+    path: sections/final-domain-quiz.yaml
+    pass_score: 70

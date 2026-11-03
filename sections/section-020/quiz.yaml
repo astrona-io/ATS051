@@ -1,0 +1,262 @@
+# Knowledge check for section 020. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats051-020
+course_id: ATS051
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-020
+  title: Configuring Alerting rules
+questions:
+- id: ats051-020-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain when an expression creates an alert instance
+  source_readings:
+  - sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
+  prompt: An alerting rule has the expression `sum(rate(lab_requests_total{status="500"}[10s]))
+    > 0.05`. At one evaluation no series exceeds 0.05. What is the state of the alert?
+  options:
+  - id: a
+    text: One pending instance exists until the next evaluation.
+    explanation: Pending needs a returned series. Nothing was returned.
+  - id: b
+    text: No instance exists, so the alert is inactive.
+    explanation: Correct. An empty result creates no instance.
+  - id: c
+    text: One firing instance exists with value 0.
+    explanation: A comparison filter removes the series, it does not return zero.
+  - id: d
+    text: The rule shows health `err`.
+    explanation: An empty result is not an error.
+  correct_option: b
+  explanation: An instance exists only for a label set that the expression returns.
+    An empty result is valid and leaves the alert inactive.
+- id: ats051-020-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish inactive, pending and firing states
+  source_readings:
+  - sections/section-020/module-01/course-01-alert-rule-anatomy-and-pending-state.md
+  prompt: 'A rule has `for: 30s` and a two second group interval. The condition is
+    true for 20 seconds, then false for one evaluation, then true again. What happens?'
+  options:
+  - id: a
+    text: The instance keeps its timer and fires 10 seconds after the condition returns.
+    explanation: The timer is not kept across an evaluation without a result.
+  - id: b
+    text: The pending instance is dropped and the 30 second timer starts again when
+      the condition returns.
+    explanation: Correct. One evaluation without a result removes a pending instance.
+  - id: c
+    text: The instance fires immediately because 20 seconds were already accumulated.
+    explanation: Firing needs the condition to hold continuously for the full `for`
+      duration.
+  - id: d
+    text: Prometheus sends the pending instance to Alertmanager.
+    explanation: Pending instances are not sent.
+  correct_option: b
+  explanation: Pending state requires continuous presence. A single evaluation with
+    no result removes the pending instance and resets its timer.
+- id: ats051-020-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Relate for duration, label stability and missing inputs
+  source_readings:
+  - sections/section-020/module-01/course-02-labels-annotations-and-templates.md
+  prompt: 'A rule copies the current ratio into a label with the template `value:
+    "{{ $value }}"`. The ratio changes on every evaluation. Why does the alert never
+    fire?'
+  options:
+  - id: a
+    text: Labels cannot hold numbers.
+    explanation: Label values are strings and can hold digits.
+  - id: b
+    text: Each new value makes a new label set, so each instance restarts its pending
+      period.
+    explanation: Correct. Labels are the identity of an alert instance.
+  - id: c
+    text: Prometheus ignores templates in labels.
+    explanation: Label values are expanded as templates.
+  - id: d
+    text: The `for` duration applies only to annotations.
+    explanation: It applies to the instance as a whole.
+  correct_option: b
+  explanation: The label set identifies an instance. A changing label creates a new
+    instance each time, so none stays pending. Put volatile values in annotations.
+- id: ats051-020-q04
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Separate alert labels from explanatory annotations
+  source_readings:
+  - sections/section-020/module-01/course-02-labels-annotations-and-templates.md
+  prompt: Which template variable gives the numeric value of the sample the expression
+    returned for an alert instance?
+  options:
+  - id: a
+    text: "`$labels`"
+    explanation: This holds the label set.
+  - id: b
+    text: "`$externalLabels`"
+    explanation: This holds the external labels of the server.
+  - id: c
+    text: "`$value`"
+    explanation: Correct. It is the value of the returned sample.
+  - id: d
+    text: "`$state`"
+    explanation: No such variable exists in alert templates.
+  correct_option: c
+  explanation: "`$value` holds the sample value, `$labels` the labels and `$externalLabels`
+    the configured external labels."
+- id: ats051-020-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Write a recording rule with a stable name
+  source_readings:
+  - sections/section-020/module-01/course-03-recording-rules.md
+  prompt: Which recording rule expression handles counter resets correctly and follows
+    the usual naming convention for a per-service 10 second request rate?
+  options:
+  - id: a
+    text: "`record: rate_of_requests`, `expr: rate(sum(lab_requests_total)[10s:])`"
+    explanation: Summing before rate merges counters and the name carries no level.
+  - id: b
+    text: "`record: service:lab_requests:rate10s`, `expr: sum by (service) (rate(lab_requests_total[10s]))`"
+    explanation: Correct. Rate is applied first and the name is level:metric:operations.
+  - id: c
+    text: "`record: lab_requests_total:sum`, `expr: sum by (service) (lab_requests_total)`"
+    explanation: This stores a summed counter and does not apply rate.
+  - id: d
+    text: "`record: service-lab-requests`, `expr: avg(lab_requests_total)`"
+    explanation: The name does not follow the convention and avg of counters is not
+      a rate.
+  correct_option: b
+  explanation: Apply rate to the raw counter, then aggregate. Name the series level:metric:operations.
+- id: ats051-020-q06
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Write a recording rule and use it in an alert
+  source_readings:
+  - sections/section-020/module-01/course-03-recording-rules.md
+  prompt: An alert reads a series written by a recording rule in a different group.
+    The alert sometimes uses the previous evaluation's value. What is the cause and
+    the fix?
+  options:
+  - id: a
+    text: Groups run concurrently with no ordering, so put the recording rule first
+      in the same group.
+    explanation: Correct. Rules in one group run in order and see the current cycle.
+  - id: b
+    text: Recording rules are written every five minutes, so lower the lookback.
+    explanation: Recording rules write at their group interval.
+  - id: c
+    text: The alert must use `bool` so it reads the newest sample.
+    explanation: "`bool` changes the result type, not the timing."
+  - id: d
+    text: Alerts always read one cycle late, and nothing can change that.
+    explanation: Placing both rules in one group removes the lag.
+  correct_option: a
+  explanation: Different groups have no ordering. Rules in one group run sequentially,
+    so a producer before its consumer gives a consistent cycle.
+- id: ats051-020-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe how rule groups are loaded, scheduled and evaluated
+  source_readings:
+  - sections/section-020/module-02/course-01-rule-groups-and-evaluation.md
+  prompt: A new rule file has a syntax error in one rule. Prometheus is reloaded with
+    `POST /-/reload`. What is the outcome?
+  options:
+  - id: a
+    text: Only the broken rule is skipped and the rest load.
+    explanation: A parse failure rejects the whole reload.
+  - id: b
+    text: The reload is rejected and the previous rules stay active.
+    explanation: Correct. `prometheus_config_last_reload_successful` shows 0.
+  - id: c
+    text: Prometheus stops evaluating all rules.
+    explanation: The old rules remain active.
+  - id: d
+    text: Prometheus restarts and loads the previous file version.
+    explanation: No restart happens.
+  correct_option: b
+  explanation: A failed parse rejects the reload as a whole. The previous configuration
+    stays active and the reload metric shows the failure.
+- id: ats051-020-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Validate rules with promtool
+  source_readings:
+  - sections/section-020/module-02/course-02-validating-rules-with-promtool.md
+  prompt: A rule uses the selector `status="5xx"`, but the metric only has the values
+    `200` and `500`. What does `promtool check rules` report?
+  options:
+  - id: a
+    text: A selector error because no series matches.
+    explanation: The check does not look at data.
+  - id: b
+    text: Success, because the syntax is valid.
+    explanation: Correct. The check validates structure and PromQL syntax only.
+  - id: c
+    text: A warning that the alert can never fire.
+    explanation: promtool does not make that judgement.
+  - id: d
+    text: A template error.
+    explanation: Templates are valid here.
+  correct_option: b
+  explanation: promtool check rules validates syntax. It cannot know which label values
+    exist in the real metric.
+- id: ats051-020-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Read rule health, last error and evaluation time
+  source_readings:
+  - sections/section-020/module-02/course-03-troubleshooting-rules.md
+  prompt: 'The rules API shows an alert rule with `health: ok` and an empty `lastError`.
+    No alert is active although failures happen. What is the most useful next step?'
+  options:
+  - id: a
+    text: Restart Prometheus, because ok means a stale evaluation.
+    explanation: Health ok means the last evaluation finished.
+  - id: b
+    text: Run the expression through the query API and remove parts from the right
+      until data appears.
+    explanation: Correct. An empty result is healthy, so narrow the expression.
+  - id: c
+    text: Increase the group interval.
+    explanation: This slows evaluation and does not explain an empty result.
+  - id: d
+    text: Delete the `for` field before reading anything else.
+    explanation: "`for` affects pending, not whether the expression returns data."
+  correct_option: b
+  explanation: Health only reports errors. An empty result is healthy, so narrowing
+    the expression with the query API finds the empty part.
+- id: ats051-020-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Find why a loaded rule does not fire
+  source_readings:
+  - sections/section-020/module-02/course-03-troubleshooting-rules.md
+  prompt: A correct expression returns data and the alert is `pending` for a long
+    time with a fixed `activeAt`. What explains this?
+  options:
+  - id: a
+    text: The `for` duration is long and has not elapsed.
+    explanation: Correct. A fixed `activeAt` means continuous presence, so only `for`
+      remains.
+  - id: b
+    text: The labels change on every evaluation.
+    explanation: That would move `activeAt`.
+  - id: c
+    text: The rule is not loaded.
+    explanation: A loaded rule is shown by the alert itself.
+  - id: d
+    text: Alertmanager is silencing the alert.
+    explanation: Silences act after firing, not during pending.
+  correct_option: a
+  explanation: A fixed `activeAt` means the condition has been continuous. The only
+    remaining wait is the `for` duration.

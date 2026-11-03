@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: starfleet
+data:
+  rules.yaml: |
+    groups:
+    - name: lab
+      interval: 2s
+      rules:
+      - record: service:lab_requests:rate10s
+        expr: sum by (service, status) (rate(lab_requests_total[10s]))
+      - alert: ProbeErrorRatioHigh
+        expr: sum(service:lab_requests:rate10s{status="500"}) / sum(service:lab_requests:rate10s) > 0.05
+        for: 4s
+        labels:
+          severity: critical
+        annotations:
+          summary: Probe error ratio is high
+          description: 'Error ratio is {{ $value | humanizePercentage }} over 10 seconds'

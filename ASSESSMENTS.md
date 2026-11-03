@@ -29,3 +29,17 @@ ID, not display position, so a later renderer can shuffle choices safely.
 
 The banks contain answer keys and are public learning material, so this is not
 a secure examination bank. Do not treat scores as an official PCA result.
+
+## Hands-On Coverage
+
+This course has 4 ungraded playgrounds and 7 independent draft labs. Tasks, launch entries and solutions follow their teaching reading. Guided practice precedes the summary. Static and offline checks are separate from live execution, which remains pending.
+
+| Module | Labs in reading order |
+| --- | --- |
+| 010/01 | Build A Dashboard Ready Query |
+| 020/01 | Make An Alert Pending Then Firing |
+| 020/01 | Evaluate A Recording Rule |
+| 030/01 | Prepare Alert Routing Labels |
+| 030/01 | Route An Alert To A Webhook |
+| 030/01 | Suppress An Alert With A Matching Silence |
+| 040/01 | Alert On Error Budget Consumption |

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: starfleet
+data:
+  rules.yaml: |
+    groups:
+    - name: lab
+      interval: 2s
+      rules:
+      - alert: ErrorBudgetFastBurn
+        expr: (sum(rate(lab_requests_total{status="500"}[30s])) / sum(rate(lab_requests_total[30s])) > 14.4 * 0.001) and (sum(rate(lab_requests_total{status="500"}[10s])) / sum(rate(lab_requests_total[10s])) > 14.4 * 0.001)
+        for: 4s
+        labels:
+          severity: page
+        annotations:
+          summary: The probe burns its error budget 14.4 times too fast
+          runbook_url: https://runbooks.example.com/probe-error-budget

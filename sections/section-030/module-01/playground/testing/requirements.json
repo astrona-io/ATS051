@@ -1,0 +1,15 @@
+{
+  "context": "kind-astro-ats-051-playground-030-01",
+  "resources": [
+    {
+      "kind": "configmap",
+      "name": "evidence",
+      "expected": {
+        "metadata": {
+          "name": "evidence"
+        }
+      }
+    }
+  ],
+  "behavior": []
+}

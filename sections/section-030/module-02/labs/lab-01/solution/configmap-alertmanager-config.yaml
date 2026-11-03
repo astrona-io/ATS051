@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  namespace: starfleet
+data:
+  alertmanager.yaml: |
+    global:
+      resolve_timeout: 1m
+    route:
+      receiver: default
+      group_by:
+      - alertname
+      group_wait: 0s
+      group_interval: 2s
+      repeat_interval: 1m
+    inhibit_rules:
+    - source_matchers:
+      - severity="critical"
+      target_matchers:
+      - severity="warning"
+      equal:
+      - service
+    receivers:
+    - name: default
+      webhook_configs:
+      - url: http://probe:8080/hooks
+        send_resolved: true

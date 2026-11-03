@@ -1,0 +1,370 @@
+# Knowledge check for section 030. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats051-030
+course_id: ATS051
+exam_code: PCA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-030
+  title: Understand and Use Alertmanager
+questions:
+- id: ats051-030-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Trace an alert through the routing tree to its receiver
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
+  prompt: The root route sends to `default`. Its first child matches `team="starfleet"`
+    and sends to `chat`. Its second child matches `severity="critical"` and sends
+    to `pager`. Neither child sets `continue`. An alert has `team="starfleet"` and
+    `severity="critical"`. Which receiver gets it?
+  options:
+  - id: a
+    text: Only `pager`, because critical severity always has priority.
+    explanation: 'This is not the best answer. Alertmanager checks children in the
+      order they are written and uses the first match. Without `continue: true`, the
+      later sibling is not checked.'
+  - id: b
+    text: Only `chat`, because the first matching child wins and the search stops
+      there.
+    explanation: 'Correct. Alertmanager checks children in the order they are written
+      and uses the first match. Without `continue: true`, the later sibling is not
+      checked.'
+  - id: c
+    text: Both `chat` and `pager`, because every matching child is used.
+    explanation: 'This is not the best answer. Alertmanager checks children in the
+      order they are written and uses the first match. Without `continue: true`, the
+      later sibling is not checked.'
+  - id: d
+    text: Only `default`, because an alert that matches two children falls back to
+      the root.
+    explanation: 'This is not the best answer. Alertmanager checks children in the
+      order they are written and uses the first match. Without `continue: true`, the
+      later sibling is not checked.'
+  correct_option: b
+  explanation: 'Alertmanager checks children in the order they are written and uses
+    the first match. Without `continue: true`, the later sibling is not checked.'
+- id: ats051-030-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the effect of continue on routing
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
+  prompt: You want critical alerts for the starfleet team to reach both `pager` and
+    `chat`. The `pager` child is first and the `chat` child is second. What is the
+    minimal change?
+  options:
+  - id: a
+    text: 'Set `continue: true` on the `pager` child.'
+    explanation: 'Correct. `continue: true` on the first matching child makes the
+      search go on with the next sibling. Setting it on the last child changes nothing
+      because no sibling follows.'
+  - id: b
+    text: 'Set `continue: true` on the `chat` child.'
+    explanation: 'This is not the best answer. `continue: true` on the first matching
+      child makes the search go on with the next sibling. Setting it on the last child
+      changes nothing because no sibling follows.'
+  - id: c
+    text: Move the `chat` child above the root route.
+    explanation: 'This is not the best answer. `continue: true` on the first matching
+      child makes the search go on with the next sibling. Setting it on the last child
+      changes nothing because no sibling follows.'
+  - id: d
+    text: 'Set `group_by: [''...'']` on the root route.'
+    explanation: 'This is not the best answer. `continue: true` on the first matching
+      child makes the search go on with the next sibling. Setting it on the last child
+      changes nothing because no sibling follows.'
+  correct_option: a
+  explanation: "`continue: true` on the first matching child makes the search go on
+    with the next sibling. Setting it on the last child changes nothing because no
+    sibling follows."
+- id: ats051-030-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain why a route does not match an alert whose labels were
+    dropped by the rule
+  source_readings:
+  - sections/section-030/module-01/course-01-routing-trees-and-matchers.md
+  prompt: A route matches `team="starfleet"` but alerts from the rule `sum by (service)
+    (rate(errors_total[5m])) > 1` always go to the root receiver. What is the cause?
+  options:
+  - id: a
+    text: 'The route needs `continue: true`.'
+    explanation: This is not the best answer. Routing uses only the labels the alert
+      carries. `sum by (service)` keeps only `service`, so `team` is missing. The
+      fix belongs in the rule.
+  - id: b
+    text: The aggregation removed the `team` label, so the alert never carries it.
+    explanation: Correct. Routing uses only the labels the alert carries. `sum by
+      (service)` keeps only `service`, so `team` is missing. The fix belongs in the
+      rule.
+  - id: c
+    text: The `group_wait` timer is too long.
+    explanation: This is not the best answer. Routing uses only the labels the alert
+      carries. `sum by (service)` keeps only `service`, so `team` is missing. The
+      fix belongs in the rule.
+  - id: d
+    text: Alertmanager ignores matchers for alerts with a `service` label.
+    explanation: This is not the best answer. Routing uses only the labels the alert
+      carries. `sum by (service)` keeps only `service`, so `team` is missing. The
+      fix belongs in the rule.
+  correct_option: b
+  explanation: Routing uses only the labels the alert carries. `sum by (service)`
+    keeps only `service`, so `team` is missing. The fix belongs in the rule.
+- id: ats051-030-q04
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Choose the correct grouping timer
+  source_readings:
+  - sections/section-030/module-01/course-02-grouping-and-notification-timing.md
+  prompt: A new group receives its first alert. Which setting controls how long Alertmanager
+    waits before it sends the first notification, so that related alerts can join?
+  options:
+  - id: a
+    text: "`group_interval`"
+    explanation: This is not the best answer. `group_wait` delays the first notification
+      of a new group. `group_interval` spaces later notifications about changes, and
+      `repeat_interval` repeats an unchanged group.
+  - id: b
+    text: "`repeat_interval`"
+    explanation: This is not the best answer. `group_wait` delays the first notification
+      of a new group. `group_interval` spaces later notifications about changes, and
+      `repeat_interval` repeats an unchanged group.
+  - id: c
+    text: "`group_wait`"
+    explanation: Correct. `group_wait` delays the first notification of a new group.
+      `group_interval` spaces later notifications about changes, and `repeat_interval`
+      repeats an unchanged group.
+  - id: d
+    text: "`resolve_timeout`"
+    explanation: This is not the best answer. `group_wait` delays the first notification
+      of a new group. `group_interval` spaces later notifications about changes, and
+      `repeat_interval` repeats an unchanged group.
+  correct_option: c
+  explanation: "`group_wait` delays the first notification of a new group. `group_interval`
+    spaces later notifications about changes, and `repeat_interval` repeats an unchanged
+    group."
+- id: ats051-030-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish Alertmanager timers from the rule for duration
+  source_readings:
+  - sections/section-030/module-01/course-02-grouping-and-notification-timing.md
+  prompt: 'A rule has `for: 5m` and the route has `group_wait: 30s`. The condition
+    becomes true at 10:00. When does the first notification leave at the earliest?'
+  options:
+  - id: a
+    text: At 10:00:30, because the timers run in parallel.
+    explanation: This is not the best answer. `for` is applied by Prometheus before
+      it sends the alert. The Alertmanager timers start after the alert arrives, so
+      the delays add.
+  - id: b
+    text: At 10:05:00, because `for` replaces `group_wait`.
+    explanation: This is not the best answer. `for` is applied by Prometheus before
+      it sends the alert. The Alertmanager timers start after the alert arrives, so
+      the delays add.
+  - id: c
+    text: At about 10:05:30, because Prometheus sends the alert after `for`, then
+      the group waits `group_wait`.
+    explanation: Correct. `for` is applied by Prometheus before it sends the alert.
+      The Alertmanager timers start after the alert arrives, so the delays add.
+  - id: d
+    text: At 10:30:00, because `group_wait` is multiplied by the rule interval.
+    explanation: This is not the best answer. `for` is applied by Prometheus before
+      it sends the alert. The Alertmanager timers start after the alert arrives, so
+      the delays add.
+  correct_option: c
+  explanation: "`for` is applied by Prometheus before it sends the alert. The Alertmanager
+    timers start after the alert arrives, so the delays add."
+- id: ats051-030-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain what a silence changes
+  source_readings:
+  - sections/section-030/module-01/course-03-silences.md
+  prompt: An operator creates a silence for `alertname="ProbeErrors"` for one hour
+    while the alert is firing. What is true during that hour?
+  options:
+  - id: a
+    text: Prometheus stops evaluating the rule.
+    explanation: This is not the best answer. A silence changes only notifications.
+      The alert stays in the system, and the API shows `state` as `suppressed` with
+      `silencedBy`.
+  - id: b
+    text: The alert is resolved and removed from the alert list.
+    explanation: This is not the best answer. A silence changes only notifications.
+      The alert stays in the system, and the API shows `state` as `suppressed` with
+      `silencedBy`.
+  - id: c
+    text: The alert still fires and is listed as suppressed with the silence ID, but
+      its notifications are dropped.
+    explanation: Correct. A silence changes only notifications. The alert stays in
+      the system, and the API shows `state` as `suppressed` with `silencedBy`.
+  - id: d
+    text: The alert is routed to the root receiver instead of its normal receiver.
+    explanation: This is not the best answer. A silence changes only notifications.
+      The alert stays in the system, and the API shows `state` as `suppressed` with
+      `silencedBy`.
+  correct_option: c
+  explanation: A silence changes only notifications. The alert stays in the system,
+    and the API shows `state` as `suppressed` with `silencedBy`.
+- id: ats051-030-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Write an inhibition rule with equal labels
+  source_readings:
+  - sections/section-030/module-02/course-01-inhibition-rules.md
+  prompt: A critical alert for service `probe` fires. Which rule suppresses warnings
+    of service `probe` and no other warnings?
+  options:
+  - id: a
+    text: '`source_matchers: [severity="critical"]`, `target_matchers: [severity="warning"]`,
+      `equal: [service]`'
+    explanation: 'Correct. `equal: [service]` limits suppression to targets whose
+      `service` value equals the source''s. Without it every warning in the system
+      would be suppressed.'
+  - id: b
+    text: '`source_matchers: [severity="critical"]`, `target_matchers: [severity="warning"]`
+      with no `equal`'
+    explanation: 'This is not the best answer. `equal: [service]` limits suppression
+      to targets whose `service` value equals the source''s. Without it every warning
+      in the system would be suppressed.'
+  - id: c
+    text: '`source_matchers: [severity="warning"]`, `target_matchers: [severity="critical"]`,
+      `equal: [service]`'
+    explanation: 'This is not the best answer. `equal: [service]` limits suppression
+      to targets whose `service` value equals the source''s. Without it every warning
+      in the system would be suppressed.'
+  - id: d
+    text: '`source_matchers: [service="probe"]`, `target_matchers: [service="probe"]`'
+    explanation: 'This is not the best answer. `equal: [service]` limits suppression
+      to targets whose `service` value equals the source''s. Without it every warning
+      in the system would be suppressed.'
+  correct_option: a
+  explanation: "`equal: [service]` limits suppression to targets whose `service` value
+    equals the source's. Without it every warning in the system would be suppressed."
+- id: ats051-030-q08
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Predict the effect of a missing equal label
+  source_readings:
+  - sections/section-030/module-02/course-01-inhibition-rules.md
+  prompt: 'An inhibition rule has `equal: [cluster]`. A critical alert and a warning
+    alert both carry no `cluster` label. What happens?'
+  options:
+  - id: a
+    text: The rule never applies, because a missing label cannot be equal.
+    explanation: This is not the best answer. A label missing on both alerts has the
+      empty string as value on both sides, so the values are equal and the rule applies.
+  - id: b
+    text: The rule applies, because a label missing on both alerts counts as equal.
+    explanation: Correct. A label missing on both alerts has the empty string as value
+      on both sides, so the values are equal and the rule applies.
+  - id: c
+    text: Alertmanager rejects the alerts as invalid.
+    explanation: This is not the best answer. A label missing on both alerts has the
+      empty string as value on both sides, so the values are equal and the rule applies.
+  - id: d
+    text: The warning is silenced for ten minutes.
+    explanation: This is not the best answer. A label missing on both alerts has the
+      empty string as value on both sides, so the values are equal and the rule applies.
+  correct_option: b
+  explanation: A label missing on both alerts has the empty string as value on both
+    sides, so the values are equal and the rule applies.
+- id: ats051-030-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain how an Alertmanager cluster avoids duplicates
+  source_readings:
+  - sections/section-030/module-02/course-03-high-availability-clustering.md
+  prompt: Two Alertmanager instances form a cluster. How should Prometheus send alerts
+    to them?
+  options:
+  - id: a
+    text: Through one load balancer address, so each alert reaches one instance.
+    explanation: This is not the best answer. Alerts are not replicated by gossip.
+      Silences and the notification log are. Each Prometheus must send every alert
+      to every instance.
+  - id: b
+    text: To every instance directly, because each instance builds its own groups
+      and uses the shared notification log to skip duplicates.
+    explanation: Correct. Alerts are not replicated by gossip. Silences and the notification
+      log are. Each Prometheus must send every alert to every instance.
+  - id: c
+    text: Only to the first instance, which copies alerts to the second by gossip.
+    explanation: This is not the best answer. Alerts are not replicated by gossip.
+      Silences and the notification log are. Each Prometheus must send every alert
+      to every instance.
+  - id: d
+    text: To the second instance only, as a standby for the first.
+    explanation: This is not the best answer. Alerts are not replicated by gossip.
+      Silences and the notification log are. Each Prometheus must send every alert
+      to every instance.
+  correct_option: b
+  explanation: Alerts are not replicated by gossip. Silences and the notification
+    log are. Each Prometheus must send every alert to every instance.
+- id: ats051-030-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: State the delivery guarantee of an Alertmanager cluster
+  source_readings:
+  - sections/section-030/module-02/course-03-high-availability-clustering.md
+  prompt: A network partition splits a two-instance cluster. What does Alertmanager
+    prefer?
+  options:
+  - id: a
+    text: Exactly-once delivery, by pausing both sides.
+    explanation: This is not the best answer. Alertmanager prefers a duplicate message
+      to a lost one and does not promise exactly-once delivery.
+  - id: b
+    text: Losing the notification, to avoid duplicates.
+    explanation: This is not the best answer. Alertmanager prefers a duplicate message
+      to a lost one and does not promise exactly-once delivery.
+  - id: c
+    text: At-least-once delivery, so each side can send and the receiver may get a
+      duplicate.
+    explanation: Correct. Alertmanager prefers a duplicate message to a lost one and
+      does not promise exactly-once delivery.
+  - id: d
+    text: Sending all notifications through the first instance.
+    explanation: This is not the best answer. Alertmanager prefers a duplicate message
+      to a lost one and does not promise exactly-once delivery.
+  correct_option: c
+  explanation: Alertmanager prefers a duplicate message to a lost one and does not
+    promise exactly-once delivery.
+- id: ats051-030-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Validate a configuration before deployment
+  source_readings:
+  - sections/section-030/module-02/course-04-amtool-and-the-api.md
+  prompt: You change a route and want to check which receiver the labels `service=probe
+    severity=critical` reach, without a running Alertmanager. Which command does this?
+  options:
+  - id: a
+    text: "`amtool config routes test --config.file=alertmanager.yaml service=probe
+      severity=critical`"
+    explanation: Correct. `amtool config routes test` evaluates the routing tree of
+      a file offline and prints the receiver. The other commands need a running server.
+  - id: b
+    text: "`amtool silence add service=probe`"
+    explanation: This is not the best answer. `amtool config routes test` evaluates
+      the routing tree of a file offline and prints the receiver. The other commands
+      need a running server.
+  - id: c
+    text: "`amtool alert query service=probe`"
+    explanation: This is not the best answer. `amtool config routes test` evaluates
+      the routing tree of a file offline and prints the receiver. The other commands
+      need a running server.
+  - id: d
+    text: "`amtool config show`"
+    explanation: This is not the best answer. `amtool config routes test` evaluates
+      the routing tree of a file offline and prints the receiver. The other commands
+      need a running server.
+  correct_option: a
+  explanation: "`amtool config routes test` evaluates the routing tree of a file offline
+    and prints the receiver. The other commands need a running server."

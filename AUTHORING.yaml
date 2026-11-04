@@ -50,7 +50,7 @@ sections:
       after_reading: sections/section-010/module-01/course-01-dashboards-that-explain-population-units-and-gaps.md
       objective: Evaluate the required expression and preserve its labels, values
         and evaluation time.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-010/module-01/course-02-guided-practice.md
@@ -81,13 +81,13 @@ sections:
       path: sections/section-020/module-01/labs/lab-01
       after_reading: sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
       objective: Create a real alert rule and observe the transition to firing.
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-020/module-01/labs/lab-02
       after_reading: sections/section-020/module-01/course-01-alert-expressions-pending-state-and-stable-labels.md
       objective: Create a recording series from live request counters.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-020/module-01/course-02-guided-practice.md
@@ -119,19 +119,19 @@ sections:
       after_reading: sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
       objective: Evaluate the required expression and preserve its labels, values
         and evaluation time.
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-030/module-01/labs/lab-02
       after_reading: sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
       objective: Verify real Alertmanager routing to a receiver.
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-03
       path: sections/section-030/module-01/labs/lab-03
       after_reading: sections/section-030/module-01/course-01-routing-grouping-silences-and-inhibition.md
       objective: Verify real Alertmanager routing and matching suppression.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-030/module-01/course-02-guided-practice.md
@@ -163,7 +163,7 @@ sections:
       after_reading: sections/section-040/module-01/course-01-actionable-alerts-symptoms-and-error-budget-reasoning.md
       objective: Create an actionable alert from the stated population and success
         objective.
-      status: draft
+      status: alpha
       runtime_verification: pending
     practice_readings:
     - sections/section-040/module-01/course-02-guided-practice.md

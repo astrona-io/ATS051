@@ -253,7 +253,7 @@ modules:
     difficulty: intermediate
     estimated_duration: 25m
     topic: prometheus-rule
-    task_kind: fix
+    task_kind: troubleshooting
     learning_goals:
     - Find why a selector matches no series and why a long for duration hides an alert
     - Add severity and templated annotations and reload the rule file

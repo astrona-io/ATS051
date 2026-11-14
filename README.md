@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://astrona.io/courses/prometheus-certified-associate">
+    <img src="https://astrona.io/courses/prometheus-certified-associate/domains/ATS051.svg" alt="ATS051: Alerting & Dashboarding, part of the Prometheus Certified Associate course on Astrona" width="100%">
+  </a>
+</p>
+
 # Alerting & Dashboarding (ATS051)
 
 Prometheus Certified Associate (PCA): Alerting & Dashboarding, worth 18% of the official curriculum. This course belongs to ATP010.
